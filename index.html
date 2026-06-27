@@ -1,0 +1,1328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Throughline — Discover your college application theme</title>
+<style>
+:root{
+  --ink:#0E1B2E; --ink2:#16263F; --ink3:#22364F;
+  --bg:#F6F7FA; --card:#FFFFFF; --line:#E5E9F0; --line2:#EFF2F7;
+  --text:#16233A; --muted:#647189; --soft:#8A96AB;
+  --gold:#B0851F; --goldd:#8A6916; --gold2:#CBA63E; --goldsoft:#F3EAD0;
+  --blue:#2B49B8; --blue2:#3D5BD0; --bluesoft:#EAEEFB;
+  --good:#2E7D55; --goodsoft:#E5F2EB; --warn:#9A6212; --warnsoft:#F8EFDD; --bad:#9A3B34; --badsoft:#F7E9E7;
+  --serif:Georgia,'Times New Roman',serif;
+  --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Inter,Helvetica,Arial,sans-serif;
+  --r:16px; --rs:10px; --sh:0 1px 3px rgba(14,27,46,.06),0 8px 24px rgba(14,27,46,.06);
+  --sh2:0 2px 6px rgba(14,27,46,.08),0 16px 40px rgba(14,27,46,.10);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font-family:var(--sans);color:var(--text);background:var(--bg);line-height:1.55;-webkit-font-smoothing:antialiased}
+h1,h2,h3{margin:0;line-height:1.2}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+.serif{font-family:var(--serif)}
+.muted{color:var(--muted)}
+#topbar{position:sticky;top:0;z-index:50;background:rgba(14,27,46,.96);backdrop-filter:saturate(140%) blur(6px);color:#fff;border-bottom:1px solid rgba(255,255,255,.08)}
+#topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+.brand{display:flex;align-items:center;gap:11px;font-weight:700;letter-spacing:.2px}
+.brand .mk{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;background:linear-gradient(135deg,var(--gold),var(--goldd));color:#10203a;font-family:var(--serif);font-weight:700;font-size:18px}
+.brand .sub{font-weight:400;color:#9fb0c4;font-size:12.5px;border-left:1px solid rgba(255,255,255,.18);padding-left:11px;margin-left:2px}
+#topbar .right{font-size:13px;color:#9fb0c4;display:flex;align-items:center;gap:14px}
+.btn{display:inline-flex;align-items:center;gap:8px;border-radius:11px;padding:13px 22px;font-weight:600;font-size:15px;transition:.15s transform,.15s box-shadow,.15s background}
+.btn:active{transform:translateY(1px)}
+.btn-primary{background:linear-gradient(135deg,var(--blue),var(--blue2));color:#fff;box-shadow:0 6px 18px rgba(43,73,184,.28)}
+.btn-primary:hover{box-shadow:0 8px 22px rgba(43,73,184,.36)}
+.btn-ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
+.btn-ghost:hover{border-color:#c9d2e0;background:#fcfdff}
+.btn-gold{background:linear-gradient(135deg,var(--gold),var(--goldd));color:#16233A}
+.btn-lg{padding:15px 28px;font-size:16px}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+.screen{display:none}
+.screen.active{display:block;animation:fade .4s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.hero{background:radial-gradient(1200px 500px at 80% -10%,rgba(203,166,62,.16),transparent 60%),linear-gradient(180deg,var(--ink),#0c1830);color:#fff;padding:74px 0 84px;position:relative;overflow:hidden}
+.hero .eyebrow{color:var(--gold2);font-weight:700;letter-spacing:2.4px;text-transform:uppercase;font-size:12.5px;margin-bottom:18px}
+.hero h1{font-family:var(--serif);font-size:clamp(34px,6vw,58px);font-weight:700;letter-spacing:-.5px;max-width:14ch}
+.hero p.lede{color:#c4d0e1;font-size:clamp(16px,2.3vw,20px);max-width:60ch;margin:20px 0 30px}
+.hero .cta-row{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+.hero .mins{color:#9fb0c4;font-size:13.5px}
+.heroart{position:absolute;right:-40px;top:40px;opacity:.5;pointer-events:none}
+@media(max-width:840px){.heroart{display:none}}
+.lp-section{padding:54px 0}
+.lp-section h2{font-family:var(--serif);font-size:clamp(24px,3.4vw,32px);text-align:center;letter-spacing:-.3px}
+.lp-section .sub{text-align:center;color:var(--muted);max-width:62ch;margin:12px auto 0;font-size:16px}
+.cards3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:34px}
+@media(max-width:760px){.cards3{grid-template-columns:1fr}}
+.fcard{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:24px;box-shadow:var(--sh)}
+.fcard .ic{width:42px;height:42px;border-radius:11px;display:grid;place-items:center;background:var(--bluesoft);color:var(--blue);margin-bottom:14px;font-size:20px}
+.fcard h3{font-size:17px;margin-bottom:7px}
+.fcard p{color:var(--muted);font-size:14.5px;margin:0}
+.steps3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:34px}
+@media(max-width:760px){.steps3{grid-template-columns:1fr}}
+.scard{position:relative;padding:24px 22px;border-radius:var(--r);background:#fff;border:1px solid var(--line)}
+.scard .n{font-family:var(--serif);font-size:30px;color:var(--gold);font-weight:700}
+.scard h3{font-size:16px;margin:6px 0 6px}
+.scard p{color:var(--muted);font-size:14px;margin:0}
+.banner{background:linear-gradient(135deg,var(--ink2),var(--ink3));color:#fff;border-radius:20px;padding:34px;text-align:center;margin:14px 0 0}
+.banner p{color:#c4d0e1;max-width:64ch;margin:10px auto 22px}
+#screen-assessment{padding:30px 0 70px}
+.progress-head{margin-bottom:22px}
+.progress-meta{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px}
+.progress-meta .lbl{font-weight:700;color:var(--ink);font-size:14px;letter-spacing:.3px;text-transform:uppercase}
+.progress-meta .pct{color:var(--muted);font-size:13.5px}
+.pbar{height:8px;background:var(--line);border-radius:99px;overflow:hidden}
+.pbar>div{height:100%;background:linear-gradient(90deg,var(--blue),var(--gold));border-radius:99px;width:0;transition:width .45s cubic-bezier(.4,0,.2,1)}
+.steplist{display:flex;gap:6px;margin-top:14px;flex-wrap:wrap}
+.steplist .s{font-size:12px;color:var(--soft);padding:4px 10px;border-radius:99px;border:1px solid var(--line);background:#fff;white-space:nowrap}
+.steplist .s.cur{color:var(--blue);border-color:var(--blue);background:var(--bluesoft);font-weight:600}
+.steplist .s.done{color:var(--good);border-color:#cfe6da;background:var(--goodsoft)}
+.qcard{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh);padding:30px}
+.qcard .sec-title{font-family:var(--serif);font-size:25px;letter-spacing:-.3px}
+.qcard .sec-sub{color:var(--muted);margin:8px 0 0;font-size:15px}
+.q{margin-top:28px;padding-top:24px;border-top:1px solid var(--line2)}
+.q:first-of-type{border-top:none;padding-top:8px}
+.q .qlabel{font-weight:650;font-size:16.5px;color:var(--ink)}
+.q .qhint{color:var(--muted);font-size:13.5px;margin-top:3px}
+.chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:14px}
+.chip{border:1px solid var(--line);background:#fff;border-radius:11px;padding:10px 14px;font-size:14px;color:var(--text);transition:.12s;line-height:1.3;text-align:left}
+.chip:hover{border-color:#c4cfe0}
+.chip.sel{background:var(--ink);color:#fff;border-color:var(--ink);box-shadow:0 4px 12px rgba(14,27,46,.18)}
+.chip.sel::before{content:"\2713  ";color:var(--gold2);font-weight:700}
+textarea{width:100%;margin-top:13px;border:1px solid var(--line);border-radius:12px;padding:14px 15px;font-family:inherit;font-size:15px;color:var(--text);resize:vertical;min-height:92px;background:#fff;transition:.12s}
+textarea:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px var(--bluesoft)}
+input[type=text],select{border:1px solid var(--line);border-radius:10px;padding:11px 13px;font-family:inherit;font-size:14.5px;color:var(--text);background:#fff;width:100%}
+input[type=text]:focus,select:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px var(--bluesoft)}
+.metarow{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:14px}
+@media(max-width:620px){.metarow{grid-template-columns:1fr}}
+.metarow label{font-size:13px;font-weight:600;color:var(--ink);display:block;margin-bottom:6px}
+.actrow{display:grid;grid-template-columns:1fr 200px 38px;gap:9px;margin-top:10px;align-items:center}
+@media(max-width:620px){.actrow{grid-template-columns:1fr;gap:7px}.actrow .rm{justify-self:end}}
+.rm{width:38px;height:38px;border-radius:9px;border:1px solid var(--line);color:var(--bad);font-size:18px;display:grid;place-items:center;background:#fff}
+.rm:hover{background:var(--badsoft)}
+.addbtn{margin-top:14px;border:1px dashed #c4cfe0;border-radius:10px;padding:11px;width:100%;color:var(--blue);font-weight:600;font-size:14px;background:#fbfcff}
+.addbtn:hover{background:var(--bluesoft)}
+.navrow{display:flex;justify-content:space-between;align-items:center;margin-top:24px;gap:12px}
+.cnt{color:var(--soft);font-size:12.5px}
+#screen-analyzing{padding:90px 0;text-align:center}
+.spinner{width:64px;height:64px;margin:0 auto 26px;border-radius:50%;border:5px solid var(--line);border-top-color:var(--gold);animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+#analyzing-steps{max-width:420px;margin:24px auto 0;text-align:left}
+.astep{display:flex;align-items:center;gap:12px;padding:9px 0;color:var(--soft);font-size:15px;transition:.3s}
+.astep.on{color:var(--ink);font-weight:600}
+.astep.ok{color:var(--good)}
+.astep .dot{width:20px;height:20px;border-radius:50%;border:2px solid var(--line);flex:none;display:grid;place-items:center;font-size:11px}
+.astep.on .dot{border-color:var(--gold)}
+.astep.ok .dot{background:var(--good);border-color:var(--good);color:#fff}
+.astep.ok .dot::after{content:"\2713"}
+#screen-results{padding:30px 0 80px}
+.res-hero{background:radial-gradient(900px 360px at 85% -30%,rgba(203,166,62,.20),transparent 60%),linear-gradient(160deg,var(--ink),#0c1830);color:#fff;border-radius:22px;padding:38px 38px 34px;box-shadow:var(--sh2);position:relative;overflow:hidden}
+.res-hero .badge{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;padding:6px 12px;border-radius:99px;margin-bottom:18px}
+.badge-ai{background:rgba(203,166,62,.16);color:var(--gold2);border:1px solid rgba(203,166,62,.4)}
+.badge-engine{background:rgba(255,255,255,.08);color:#9fb0c4;border:1px solid rgba(255,255,255,.18)}
+.res-hero .klabel{color:#9fb0c4;font-size:12.5px;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin-bottom:12px}
+.res-hero h1{font-family:var(--serif);font-size:clamp(23px,3.6vw,34px);line-height:1.25;letter-spacing:-.3px;max-width:30ch}
+.res-hero .conf{margin-top:22px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.conf .meter{flex:1;min-width:180px;height:9px;background:rgba(255,255,255,.14);border-radius:99px;overflow:hidden}
+.conf .meter>div{height:100%;background:linear-gradient(90deg,var(--gold2),var(--gold));border-radius:99px}
+.conf .num{font-family:var(--serif);font-size:22px;font-weight:700;color:var(--gold2)}
+.conf .ct{color:#9fb0c4;font-size:13px}
+.section{margin-top:34px}
+.section>h2{font-family:var(--serif);font-size:23px;letter-spacing:-.2px;display:flex;align-items:center;gap:12px}
+.section>h2 .sn{width:30px;height:30px;border-radius:9px;background:var(--ink);color:var(--gold2);display:grid;place-items:center;font-size:14px;font-weight:700;font-family:var(--sans);flex:none}
+.section>.sintro{color:var(--muted);margin:8px 0 0;font-size:15px;max-width:74ch}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh);padding:24px}
+.grid2{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;margin-top:18px}
+@media(max-width:840px){.grid2{grid-template-columns:1fr}}
+.subcard{border:1px solid var(--line);border-radius:var(--rs);padding:16px 18px;margin-top:14px;background:#fcfdff}
+.subcard:first-child{margin-top:0}
+.subcard h4{font-size:13px;letter-spacing:.6px;text-transform:uppercase;color:var(--goldd);margin:0 0 8px}
+.subcard p{margin:0;font-size:15px;color:var(--text)}
+ul.clean{margin:8px 0 0;padding:0;list-style:none}
+ul.clean li{position:relative;padding:6px 0 6px 22px;font-size:15px;border-top:1px solid var(--line2)}
+ul.clean li:first-child{border-top:none}
+ul.clean li::before{content:"";position:absolute;left:4px;top:13px;width:7px;height:7px;border-radius:50%;background:var(--gold)}
+.radarwrap{display:flex;align-items:center;gap:20px;flex-wrap:wrap;justify-content:center}
+.radar{flex:none}
+.lensbars{flex:1;min-width:240px}
+.lensbar{margin:11px 0}
+.lensbar .t{display:flex;justify-content:space-between;font-size:13.5px;margin-bottom:5px}
+.lensbar .t b{font-weight:600}
+.lensbar .track{height:8px;background:var(--line);border-radius:99px;overflow:hidden}
+.lensbar .track>div{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--blue),var(--blue2))}
+.lensbar.primary .track>div{background:linear-gradient(90deg,var(--gold),var(--goldd))}
+.altgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+@media(max-width:760px){.altgrid{grid-template-columns:1fr}}
+.altcard{border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:var(--rs);padding:16px 18px;background:#fff}
+.altcard .at{font-family:var(--serif);font-size:16px;color:var(--ink);margin-bottom:6px}
+.altcard .aw{font-size:13.5px;color:var(--muted)}
+.bpgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:18px}
+@media(max-width:760px){.bpgrid{grid-template-columns:1fr}}
+.bpcard{border:1px solid var(--line);border-radius:var(--rs);padding:18px;background:#fff}
+.bpcard .bh{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.bpcard .bh .bi{width:30px;height:30px;border-radius:8px;background:var(--bluesoft);color:var(--blue);display:grid;place-items:center;flex:none}
+.bpcard .bh h4{font-size:15px}
+.oppctrl{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-top:14px}
+.toggle{display:inline-flex;align-items:center;gap:9px;font-size:13.5px;color:var(--text);cursor:pointer;user-select:none}
+.toggle input{display:none}
+.toggle .tk{width:40px;height:23px;border-radius:99px;background:var(--line);position:relative;transition:.18s}
+.toggle .tk::after{content:"";position:absolute;width:17px;height:17px;border-radius:50%;background:#fff;top:3px;left:3px;transition:.18s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.toggle input:checked+.tk{background:var(--blue)}
+.toggle input:checked+.tk::after{left:20px}
+.oppgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+@media(max-width:820px){.oppgrid{grid-template-columns:1fr}}
+.opp{border:1px solid var(--line);border-radius:var(--rs);padding:18px;background:#fff;display:flex;flex-direction:column}
+.opp .otop{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.opp .oname{font-weight:700;font-size:15.5px;color:var(--ink)}
+.opp .ocat{font-size:11.5px;color:var(--blue);font-weight:600;letter-spacing:.4px;text-transform:uppercase}
+.opp .stars{color:var(--gold);font-size:13px;letter-spacing:1px;white-space:nowrap}
+.opp .ofit{font-size:13.5px;color:var(--muted);margin:9px 0 12px}
+.opp .ometa{display:flex;flex-wrap:wrap;gap:7px;margin-top:auto}
+.tag{font-size:11.5px;padding:4px 9px;border-radius:7px;background:var(--line2);color:var(--muted);font-weight:600}
+.tag.g{background:var(--goodsoft);color:var(--good)}
+.tag.b{background:var(--bluesoft);color:var(--blue)}
+.tag.w{background:var(--warnsoft);color:var(--warn)}
+.gapgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:18px}
+@media(max-width:760px){.gapgrid{grid-template-columns:1fr}}
+.gapcard{border-radius:var(--rs);padding:16px 18px;border:1px solid var(--line)}
+.gapcard h4{font-size:13px;letter-spacing:.5px;text-transform:uppercase;margin:0 0 4px}
+.gap-missing{background:var(--badsoft);border-color:#f0d7d4}.gap-missing h4{color:var(--bad)}
+.gap-weak{background:var(--warnsoft);border-color:#f0e2c8}.gap-weak h4{color:var(--warn)}
+.gap-over{background:var(--bluesoft);border-color:#dbe3fa}.gap-over h4{color:var(--blue)}
+.gap-coh{background:var(--goodsoft);border-color:#cfe6da}.gap-coh h4{color:var(--good)}
+.gaprec{margin-top:16px}
+.stages{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:18px}
+@media(max-width:860px){.stages{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.stages{grid-template-columns:1fr}}
+.stage{border:1px solid var(--line);border-radius:var(--rs);padding:15px;background:#fff;position:relative}
+.stage .sg{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--gold)}
+.stage h4{font-size:14.5px;margin:5px 0 5px}
+.stage p{font-size:12.5px;color:var(--muted);margin:0}
+.stage .gr{position:absolute;top:12px;right:12px;font-size:11px;color:var(--soft)}
+.tl{margin-top:18px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:760px){.tl{grid-template-columns:1fr}}
+.tlcol h4{font-size:14px;color:var(--ink);margin:0 0 4px}
+.tlcol .when{font-size:12px;color:var(--gold);font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+.res-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:34px;justify-content:center}
+.disc{margin-top:26px;font-size:12.5px;color:var(--soft);text-align:center;max-width:70ch;margin-left:auto;margin-right:auto}
+footer.ft{background:var(--ink);color:#9fb0c4;padding:26px 0;font-size:13px;margin-top:40px}
+footer.ft .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+footer.ft b{color:#fff}
+@media print{
+  #topbar,#screen-landing,#screen-assessment,#screen-analyzing,.res-actions,.disc,footer.ft,.oppctrl{display:none!important}
+  body{background:#fff}
+  .screen{display:block!important}
+  #screen-results{padding:0}
+  .res-hero{background:#0E1B2E!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;color:#fff!important}
+  .card,.opp,.bpcard,.altcard,.gapcard,.subcard,.stage{box-shadow:none;break-inside:avoid;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .section{break-inside:avoid-page}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+<div id="topbar"><div class="wrap">
+  <div class="brand"><span class="mk">↗</span><span>Throughline</span><span class="sub">by Project&nbsp;Delta</span></div>
+  <div class="right"><span id="tb-status">Application theme discovery</span></div>
+</div></div>
+<section id="screen-landing" class="screen active">
+  <div class="hero">
+    <svg class="heroart" width="420" height="420" viewBox="0 0 420 420" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <g stroke="#CBA63E" stroke-opacity="0.55" stroke-width="1.5">
+        <line x1="210" y1="210" x2="210" y2="70"/><line x1="210" y1="210" x2="330" y2="120"/><line x1="210" y1="210" x2="360" y2="220"/>
+        <line x1="210" y1="210" x2="320" y2="320"/><line x1="210" y1="210" x2="210" y2="350"/><line x1="210" y1="210" x2="95" y2="320"/>
+        <line x1="210" y1="210" x2="60" y2="220"/><line x1="210" y1="210" x2="95" y2="120"/>
+      </g>
+      <g fill="#16263F" stroke="#CBA63E" stroke-opacity="0.5">
+        <circle cx="210" cy="70" r="16"/><circle cx="330" cy="120" r="16"/><circle cx="360" cy="220" r="16"/><circle cx="320" cy="320" r="16"/>
+        <circle cx="210" cy="350" r="16"/><circle cx="95" cy="320" r="16"/><circle cx="60" cy="220" r="16"/><circle cx="95" cy="120" r="16"/>
+      </g>
+      <circle cx="210" cy="210" r="30" fill="#CBA63E"/>
+    </svg>
+    <div class="wrap">
+      <div class="eyebrow">Find the thread that connects everything</div>
+      <h1 class="serif">Discover your application throughline.</h1>
+      <p class="lede">Strong college applications are not a pile of impressive activities. They are an account of a person. This assessment finds the recurring question beneath your interests, frustrations, and behaviors, then turns it into a theme that can organize your essays, activities, research, and four-year plan.</p>
+      <div class="cta-row">
+        <button class="btn btn-gold btn-lg" onclick="startAssessment()">Start the assessment →</button>
+        <span class="mins">About 10 to 15 minutes · No sign-up</span>
+      </div>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="lp-section">
+      <h2 class="serif">What you will walk away with</h2>
+      <p class="sub">Not a recommended major. A coherent intellectual identity, and a concrete plan to make every part of your application point at the same person.</p>
+      <div class="cards3">
+        <div class="fcard"><div class="ic">◎</div><h3>Your core lens</h3><p>The single way of seeing the world that recurs across your answers, scored against twelve possible themes with a confidence reading and two alternatives.</p></div>
+        <div class="fcard"><div class="ic">▦</div><h3>An application blueprint</h3><p>Exactly how your theme can show up in activities, research, leadership, competitions, essays, and summer programs so the file reads as one story.</p></div>
+        <div class="fcard"><div class="ic">◷</div><h3>A four-year roadmap</h3><p>A grade-aware path from curiosity to impact, a gap analysis of your current profile, and a curated list of opportunities matched to your theme.</p></div>
+      </div>
+    </div>
+    <div class="lp-section" style="padding-top:10px">
+      <h2 class="serif">How it works</h2>
+      <div class="steps3">
+        <div class="scard"><div class="n">1</div><h3>Answer honestly</h3><p>Five short sections on your curiosities, frustrations, behaviors, values, and current activities. There are no right answers, only revealing ones.</p></div>
+        <div class="scard"><div class="n">2</div><h3>We find the pattern</h3><p>The engine reads your responses for the recurring thread, scores possible themes, and identifies the strongest, most authentic one.</p></div>
+        <div class="scard"><div class="n">3</div><h3>You get a strategy</h3><p>A full dashboard you can refine, then export as a PDF to take into your essays, your activity planning, and your conversations with counselors.</p></div>
+      </div>
+      <div class="banner">
+        <h2 class="serif" style="color:#fff">A theme is discovered, not invented.</h2>
+        <p>The goal is not to find what sounds impressive. It is to surface the deepest recurring pattern already in your life, the question you keep circling, and to make it legible to the person reading your file.</p>
+        <button class="btn btn-gold btn-lg" onclick="startAssessment()">Begin →</button>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="screen-assessment" class="screen">
+  <div class="wrap" style="max-width:780px">
+    <div class="progress-head">
+      <div class="progress-meta"><span class="lbl" id="step-label">Section 1 of 5</span><span class="pct" id="step-pct">0% complete</span></div>
+      <div class="pbar"><div id="pbar-fill"></div></div>
+      <div class="steplist" id="steplist"></div>
+    </div>
+    <div class="qcard" id="qcard"></div>
+    <div class="navrow">
+      <button class="btn btn-ghost" id="backbtn" onclick="prevStep()">← Back</button>
+      <span class="cnt" id="answered-note"></span>
+      <button class="btn btn-primary" id="nextbtn" onclick="nextStep()">Next →</button>
+    </div>
+  </div>
+</section>
+<section id="screen-analyzing" class="screen">
+  <div class="wrap" style="max-width:560px">
+    <div class="spinner"></div>
+    <h2 class="serif" style="font-size:26px">Reading your throughline…</h2>
+    <p class="muted" id="analyzing-mode">Analyzing your responses</p>
+    <div id="analyzing-steps">
+      <div class="astep" data-i="0"><span class="dot"></span><span>Identifying recurring patterns</span></div>
+      <div class="astep" data-i="1"><span class="dot"></span><span>Mapping your core lens</span></div>
+      <div class="astep" data-i="2"><span class="dot"></span><span>Scoring possible themes</span></div>
+      <div class="astep" data-i="3"><span class="dot"></span><span>Writing your blueprint and roadmap</span></div>
+    </div>
+  </div>
+</section>
+<section id="screen-results" class="screen"><div class="wrap" id="results-root"></div></section>
+<footer class="ft"><div class="wrap">
+  <span><b>Throughline</b> · a theme-discovery tool by Project Delta</span>
+  <span>Recommendations are a starting point, not a guarantee. Verify program details and eligibility.</span>
+</div></footer>
+<script>
+"use strict";
+/* ============================ DATA: LENSES ============================ */
+const LENSES = {
+  systems:{name:"Systems & Optimization",essence:"You see the world as processes that can be understood and made to work better.",domain:"engineering and data",
+    theme:"A systems thinker using {d} to make the processes people depend on run better and more fairly.",
+    majors:["Industrial / Operations Engineering","Economics","Computer Science","Applied Math"],
+    questions:["Why does this process waste so much, and where exactly does it stall?","How would I redesign this if I started from scratch?","What is the one constraint that everything else depends on?"],
+    worldview:"You instinctively model situations as systems with inputs, bottlenecks, and feedback loops, and you are happiest when you can find the lever that makes the whole thing work better.",
+    values:["Efficiency that serves people, not efficiency for its own sake","Designs that are transparent and improvable","Measurable improvement over good intentions"],
+    patterns:["You reduce messy situations to their underlying structure","You look for the leverage point rather than treating every problem equally","You quantify before you conclude"],
+    bp:{activities:["Audit and redesign a real process: a school office, a club's logistics, a local queue","Build a tool that removes a specific bottleneck people actually feel"],
+      research:["A data project measuring inefficiency in a system you can access, with a proposed fix"],
+      leadership:["Take an operations or logistics role and leave behind a documented, better system"],
+      competitions:["Economics or operations olympiads; modeling and optimization challenges"],
+      essays:["A moment you could not stop noticing waste, and what you rebuilt","Why you trust structure over slogans"],
+      summer:["A quantitative math summer program; an operations or entrepreneurship intensive"],
+      community:["A redesign that makes a local service faster or fairer, with before-and-after numbers"],
+      future:["Engineering or economics study aimed at the design of better systems and institutions"]},
+    gap:["a data or measurement project","an operations or logistics leadership role","a built tool that fixes a real bottleneck"],
+    kw:["system","optimi","efficien","process","bottleneck","logistics","workflow","streamline","operation","model","data","algorithm","queue","supply"]},
+  behavior:{name:"Human Behavior",essence:"You are pulled toward why people do what they do.",domain:"psychology and data",
+    theme:"A researcher of human behavior using {d} to understand why people act as they do and to design better choices.",
+    majors:["Psychology","Cognitive Science","Behavioral Economics","Sociology"],
+    questions:["Why did they really do that, underneath the reason they gave?","What invisible incentive is shaping this behavior?","How could the situation be designed so people choose better?"],
+    worldview:"You read situations through motivation and incentive, and you assume that behavior usually makes sense once you understand the pressures acting on a person.",
+    values:["Understanding people before judging them","Designing situations that bring out better behavior","Evidence over intuition about human nature"],
+    patterns:["You look past stated reasons to underlying motives","You notice incentives others miss","You test claims about people rather than assuming"],
+    bp:{activities:["Run small, careful surveys or experiments on a behavior you find puzzling","Apply a behavioral insight to a real problem: saving, studying, participation"],
+      research:["A behavioral study with real data, even at small scale, with an honest write-up"],
+      leadership:["A role where you redesign how people participate, and measure whether it worked"],
+      competitions:["Psychology and brain-bee competitions; behavioral economics challenges"],
+      essays:["A habit in yourself or others you could not explain until you studied it","What watching people taught you that books did not"],
+      summer:["A psychology or social-science research program; a behavioral economics seminar"],
+      community:["An intervention that nudges a community toward a healthier behavior, measured"],
+      future:["Study of psychology, cognitive science, or behavioral economics with a research bent"]},
+    gap:["a small behavioral study or survey","a writing outlet analyzing behavior","a role redesigning how people participate"],
+    kw:["psycholog","behavi","motivat","incentive","habit","decision","cognit","social","mind","bias","persuad","emotion"]},
+  fairness:{name:"Fairness & Justice",essence:"You notice who is left out, and whether the rules are fair.",domain:"policy and law",
+    theme:"A fairness-minded thinker using {d} to redesign institutions so opportunity reaches the people the system overlooks.",
+    majors:["Public Policy","Political Science","Economics","Law (pre-law)"],
+    questions:["Who is being left out here, and is that fair?","What rule is producing this unfair outcome?","How would I redesign this institution to be just?"],
+    worldview:"You read the world for fairness, tracing unequal outcomes back to the rules and institutions that produce them, and you move from noticing injustice to analyzing its causes.",
+    values:["Fair processes, not only fair intentions","Opportunity that does not depend on luck of birth","Reform grounded in evidence, not only outrage"],
+    patterns:["You move from a feeling of unfairness to the structural cause","You pair moral seriousness with analysis","You ask who designed the rule and why"],
+    bp:{activities:["Audit a real institution for an inequity and propose a fairer rule","Build something that gives an overlooked group a right or a voice they lacked"],
+      research:["A policy or economics analysis of a specific local inequity, with a concrete proposal"],
+      leadership:["A role on a governance or policy body where you change an actual rule"],
+      competitions:["Essay competitions in philosophy, politics, and economics; policy and debate"],
+      essays:["The first time a rule meant to be fair produced an unfair result","Why you analyze injustice rather than only protest it"],
+      summer:["A social-justice humanities seminar; a policy or pre-law summer program"],
+      community:["A reform or service that widens access for a specific overlooked group"],
+      future:["Study of policy, economics, or law aimed at the design of fairer institutions"]},
+    gap:["a policy or institutional-audit project","an essay or debate record on justice","a reform you actually got adopted"],
+    kw:["fair","justice","equit","inequal","right","policy","law","exclud","margin","access","discrimin","reform","ethic","oppress"]},
+  risk:{name:"Risk & Uncertainty",essence:"You are drawn to how to act when the future is unknown.",domain:"statistics and modeling",
+    theme:"A decision scientist using {d} to reason clearly under uncertainty and help others act on incomplete information.",
+    majors:["Statistics","Economics","Applied Math","Data Science"],
+    questions:["What are the odds, really, and how would we know?","How should we decide when we cannot be certain?","What is the cost of being wrong, and which way?"],
+    worldview:"You treat the future as a distribution rather than a single guess, and you are drawn to the discipline of acting well when the information is incomplete.",
+    values:["Honesty about what we do not know","Calibrated confidence over false certainty","Decisions that account for consequences"],
+    patterns:["You quantify uncertainty instead of ignoring it","You separate a good decision from a good outcome","You update your view when evidence changes"],
+    bp:{activities:["Build a forecasting or prediction project on something real and track your accuracy","Run a calibration or prediction club where claims are scored"],
+      research:["A modeling project that estimates a risk in your environment, with stated assumptions"],
+      leadership:["A role where you bring evidence and probability to a decision others guessed at"],
+      competitions:["Statistics, economics, and data-science modeling competitions"],
+      essays:["A confident prediction that failed, and what it taught you about doubt","Why you would rather be calibrated than certain"],
+      summer:["A statistics, data-science, or quantitative economics program"],
+      community:["A risk model for flooding, health, or scheduling that helps people decide better"],
+      future:["Study of statistics, data science, or economics focused on decision under uncertainty"]},
+    gap:["a data or forecasting project with tracked accuracy","a quantitative competition record","a real decision you improved with evidence"],
+    kw:["risk","uncertain","probab","predict","forecast","statistic","data","model","odds","estimat","decision","gambl","calibrat"]},
+  discovery:{name:"Scientific Discovery",essence:"You want to know how the natural world actually works.",domain:"research and experiment",
+    theme:"A research-driven scientist investigating how the natural world works, from first principles to real experiments.",
+    majors:["Physics","Chemistry","Biology","Engineering Science"],
+    questions:["How does this actually work, underneath the textbook explanation?","How would I test that, and what would change my mind?","What is really causing the effect we see?"],
+    worldview:"You are less interested in science as a set of facts than in the process by which facts are established, and you treat every question as something to be investigated rather than accepted.",
+    values:["Truth established by method, not authority","Curiosity that goes beyond the syllabus","Honest results, including the ones that fail"],
+    patterns:["You ask how a claim was tested","You design experiments rather than collecting conclusions","You follow an effect back to its mechanism"],
+    bp:{activities:["Run an independent investigation or replication and document the method honestly","Build or improvise the equipment to test a question you actually have"],
+      research:["Lab or independent research with a clear question, method, and result"],
+      leadership:["Lead a research or science-outreach effort that teaches method, not just facts"],
+      competitions:["Science olympiads in physics, chemistry, or biology; research fairs"],
+      essays:["A question you investigated on your own and where it led","What a failed experiment taught you"],
+      summer:["A selective research institute or a university lab placement"],
+      community:["Science explained or measured for people who lack access to it"],
+      future:["Study of a natural science or engineering science, research-oriented"]},
+    gap:["an independent research or replication project","a science-fair or olympiad record","a mentored lab placement"],
+    kw:["research","experiment","science","physic","chemi","biolog","lab","hypothes","discover","mechanism","scientific","molecul","quantum","genetic"]},
+  info:{name:"Information Flow",essence:"You are fascinated by how knowledge, ideas, and signals move.",domain:"computation and networks",
+    theme:"An information thinker mapping how ideas move, and building tools that help the truth travel faster than the noise.",
+    majors:["Computer Science","Data Science","Communication","Information Science"],
+    questions:["How does this idea, or this rumor, actually spread?","Where does the signal get lost or distorted?","How could the right information reach people faster?"],
+    worldview:"You see the world as networks of information, and you are drawn to how knowledge propagates, where it breaks down, and how to make the flow more honest.",
+    values:["Truth that reaches people, not just truth that exists","Clarity over noise","Tools that empower understanding"],
+    patterns:["You think in networks and flows","You trace how information degrades as it travels","You build or analyze rather than only consume"],
+    bp:{activities:["Map how a real rumor, trend, or message spread through your community","Build a tool that fights misinformation or surfaces signal in noise"],
+      research:["A network or data analysis of how information moves in a system you can observe"],
+      leadership:["Run a publication, fact-check effort, or knowledge platform with reach"],
+      competitions:["Informatics and computing olympiads; data and analytics challenges"],
+      essays:["The day a false message moved faster than the truth","Why you build instead of just complaining about the noise"],
+      summer:["A computing, data-science, or media-and-society program"],
+      community:["A local information tool: alerts, fact-checks, or guides people actually use"],
+      future:["Study of computer science, data, or communication focused on information systems"]},
+    gap:["a built information or data tool","a network or spread analysis project","a publication or platform with reach"],
+    kw:["informat","network","spread","misinform","data","communicat","media","viral","signal","knowledge","journal","internet"]},
+  resilience:{name:"Human Resilience",essence:"You are drawn to how people and systems withstand and recover from shocks.",domain:"engineering and public health",
+    theme:"A builder of resilience studying how people and systems withstand shocks, and strengthening the ones that protect the vulnerable.",
+    majors:["Public Health","Civil / Environmental Engineering","Psychology","Public Policy"],
+    questions:["What lets some people or places recover when others collapse?","Where is this system most fragile, and who pays when it breaks?","How do we build in the ability to bounce back?"],
+    worldview:"You are drawn to the conditions that let people and systems endure hardship, and you instinctively look for the weak point that decides who recovers and who does not.",
+    values:["Protecting people who absorb the most risk","Strength that is built, not assumed","Preparation over reaction"],
+    patterns:["You look for the fragile point before it breaks","You connect individual hardship to systemic weakness","You design for the shock, not only the steady state"],
+    bp:{activities:["Build a project that helps a community withstand a recurring shock: outage, flood, illness","Document a fragility in a local system and propose how to strengthen it"],
+      research:["A study of why a system or group is fragile, with a resilience proposal"],
+      leadership:["Lead a preparedness or recovery effort and leave a durable structure behind"],
+      competitions:["Engineering and public-health challenges; science fairs on resilience"],
+      essays:["A shock you watched a community absorb, and what made the difference","Why you build for the worst day, not the average one"],
+      summer:["A public-health, engineering, or policy program on resilient systems"],
+      community:["A concrete safeguard that protects a vulnerable group from a known risk"],
+      future:["Study of public health, engineering, or policy focused on resilient systems"]},
+    gap:["a resilience or preparedness project","a study of a local fragility","a recovery effort you led"],
+    kw:["resilien","recover","withstand","shock","fragil","disaster","crisis","cope","endur","survive","public health","vulnerab","adapt"]},
+  community:{name:"Community Development",essence:"You turn local problems into lasting institutions.",domain:"organizing and policy",
+    theme:"A community builder turning local problems into durable institutions that make a place stronger from the inside.",
+    majors:["Public Policy","Sociology","Urban Studies","Economics"],
+    questions:["What does this community actually need, and who is closest to it?","How do we build something that lasts after I leave?","How do we make the people here stronger, not dependent?"],
+    worldview:"You see strength as something built locally and from the inside, and you are drawn to turning a felt need into an institution that outlasts you.",
+    values:["Durable structures over one-off help","Dignity and ownership, not dependence","Listening to a community before acting on it"],
+    patterns:["You build institutions, not just events","You start from the people closest to the problem","You measure whether the thing lasts"],
+    bp:{activities:["Found a local initiative that meets a specific need and is built to outlast you","Organize people around a problem they share and hand off ownership"],
+      research:["A study of a local need or asset, used to design a better intervention"],
+      leadership:["Build and then hand over a community organization with real members"],
+      competitions:["Social entrepreneurship and civic-innovation challenges"],
+      essays:["A need in your community you decided to build for","Why you measure success by what survives without you"],
+      summer:["A leadership, civic, or social-entrepreneurship program"],
+      community:["A founded institution with members, records, and a succession plan"],
+      future:["Study of policy, sociology, or economics aimed at community and development"]},
+    gap:["a founded local initiative","an organizing or leadership role with members","a needs assessment of your community"],
+    kw:["communit","local","organiz","nonprofit","volunteer","neighbor","civic","grassroots","initiative","found","mentor","service","develop"]},
+  complex:{name:"Complex Systems",essence:"You are fascinated by how simple parts create complex wholes.",domain:"computation and modeling",
+    theme:"A systems scientist fascinated by how complex wholes emerge from simple parts, across nature, society, and technology.",
+    majors:["Applied Math","Physics","Computer Science","Systems Biology"],
+    questions:["How do simple rules produce this complicated behavior?","What is the hidden structure connecting these parts?","Why does the whole behave differently from its pieces?"],
+    worldview:"You are drawn to emergence, the way simple components interacting can produce patterns no single part contains, and you look for that structure everywhere from cells to cities.",
+    values:["Understanding deeply over describing superficially","Connections across fields others keep separate","Models that reveal hidden structure"],
+    patterns:["You see the same structure across different domains","You model interactions, not just objects","You look for emergence rather than single causes"],
+    bp:{activities:["Model a complex system you can observe: traffic, an ecosystem, a market, and find the structure","Apply a method from one field to a problem in another"],
+      research:["A modeling or simulation project on an emergent system, with real or simulated data"],
+      leadership:["Lead an interdisciplinary project or club that crosses the usual boundaries"],
+      competitions:["Math modeling, physics, and computational challenges"],
+      essays:["The first time you saw the same pattern in two unrelated things","Why you refuse to stay inside one subject"],
+      summer:["A math, physics, or computational modeling program"],
+      community:["A model that helps explain or manage a complex local system"],
+      future:["Study of applied math, physics, or computation focused on complex systems"]},
+    gap:["a modeling or simulation project","an interdisciplinary project","a computational skill applied to a new domain"],
+    kw:["complex","emergen","system","network","model","simulat","pattern","interconnect","nonlinear","chaos","ecosystem","interdisciplin"]},
+  create:{name:"Creativity & Technology",essence:"You build experiences at the seam of art and engineering.",domain:"design and code",
+    theme:"A creative technologist working at the seam of art and engineering to build experiences that did not exist before.",
+    majors:["Computer Science","Design / Media Arts","Human-Computer Interaction","Engineering"],
+    questions:["What could I make that does not exist yet?","How do I make this beautiful and make it work?","How will a real person feel using this?"],
+    worldview:"You live at the boundary between making and engineering, and you are most alive when you can build something expressive that also has to actually function.",
+    values:["Craft, in both the art and the engineering","Originality over imitation","Making for real people, not just for show"],
+    patterns:["You combine the artistic and the technical instead of choosing","You ship things rather than only plan them","You sweat both how it works and how it feels"],
+    bp:{activities:["Build and release a creative-technical project: an app, game, instrument, or generative work","Combine a craft you love with code or hardware into something new"],
+      research:["A project at a real intersection: computational art, music tech, interaction design"],
+      leadership:["Lead a build team or a creative-tech community and ship together"],
+      competitions:["Hackathons; app, game, and design challenges; creative-tech contests"],
+      essays:["The first time code made something beautiful, not just correct","Why you cannot choose between art and engineering"],
+      summer:["A computing, design, or media-technology program; a maker intensive"],
+      community:["A creative tool or experience built for and used by your community"],
+      future:["Study at the intersection of computing, design, and the arts"]},
+    gap:["a shipped creative-technical build","a hackathon or design-competition record","a public portfolio of original work"],
+    kw:["design","creativ","art","music","build","code","app","game","maker","generativ","media","craft","film","animat","invent"]},
+  access:{name:"Education Access",essence:"You care about widening the gate to opportunity, especially learning.",domain:"technology and policy",
+    theme:"An advocate for access using {d} to widen the gate to education and opportunity for underserved students.",
+    majors:["Education / Learning Sciences","Public Policy","Economics","Computer Science"],
+    questions:["Why is this opportunity available to some students and not others?","How do we make learning reach the people the system skips?","What would let someone like me, here, get further?"],
+    worldview:"You are attuned to unequal access to learning and opportunity, and you move from teaching individuals to attacking the systemic reasons the gate is closed.",
+    values:["Opportunity that does not depend on where you were born","Building capability, not charity","Reaching the students the system overlooks"],
+    patterns:["You move from tutoring one person to fixing the system","You build resources that scale beyond yourself","You analyze access, not just provide help"],
+    bp:{activities:["Build a free learning resource or program that reaches students the system skips","Teach a skill in a way that makes learners independent, and measure the reach"],
+      research:["A study of an access gap in your context, with a concrete proposal"],
+      leadership:["Found and run an education-access effort with real, counted reach"],
+      competitions:["Social-impact, ed-tech, and policy challenges; relevant essay contests"],
+      essays:["A gap in access you lived or witnessed, and what you built","Why you treat education as analysis, not charity"],
+      summer:["An education, policy, or social-impact program"],
+      community:["A program or tool that demonstrably widens access for local students"],
+      future:["Study of education, policy, economics, or computing aimed at access"]},
+    gap:["a founded education-access program","a free learning tool with measured reach","an analysis of a local access gap"],
+    kw:["education","access","tutor","learn","teach","opportunity","underserved","equit","school","mentor","scholar","literacy"]},
+  language:{name:"Language & Communication",essence:"You are drawn to how meaning is carried, translated, and understood.",domain:"linguistics and writing",
+    theme:"A student of language and meaning using {d} to help people, ideas, and cultures understand one another.",
+    majors:["Linguistics","Comparative Literature","Cognitive Science","Communication"],
+    questions:["What is lost when this is translated or explained?","Why do these two sides keep talking past each other?","How is meaning actually carried in this word or this story?"],
+    worldview:"You treat language as a system to be understood rather than only a medium, and you are drawn to the places where meaning is carried, distorted, or lost between people.",
+    values:["Being understood, and helping others understand","Precision and nuance in meaning","Bridging rather than winning"],
+    patterns:["You analyze language instead of only using it","You notice where communication breaks down","You translate between worlds, registers, and fields"],
+    bp:{activities:["Build a translation, writing, or language project that bridges two groups","Analyze or preserve a language, dialect, or way of speaking that matters to you"],
+      research:["A linguistics or communication project on how meaning moves, with examples"],
+      leadership:["Run a writing, debate, or translation effort that connects communities"],
+      competitions:["Linguistics olympiads; essay and writing competitions; debate"],
+      essays:["A word that does not translate, and what it taught you about yourself","Where you watched two sides fail to understand each other, and what you did"],
+      summer:["A writing program; a linguistics or humanities seminar"],
+      community:["A translation or communication service that connects groups locally"],
+      future:["Study of linguistics, literature, cognitive science, or communication"]},
+    gap:["a writing or translation body of work","a linguistics project or competition","a communication effort that bridges groups"],
+    kw:["language","translat","writ","linguist","communicat","meaning","word","story","literatur","poem","debate","rhetoric","bilingual","essay"]}
+};
+const LENS_ORDER = Object.keys(LENSES);
+/* ============================ DATA: OPPORTUNITIES ============================ */
+const OPP_RAW = [
+["International Math Olympiad (IMO)","Olympiad",["systems","complex","risk"],5,"Extreme","9–12","Year-round","Global","The summit of competition math, reached through your country's national rounds."],
+["International Olympiad in Informatics (IOI / USACO)","Olympiad",["info","systems","create","complex"],5,"Extreme","9–12","Year-round","Global","Algorithmic problem-solving; USACO is open online and feeds national teams."],
+["International Physics Olympiad (IPhO)","Olympiad",["discovery","complex"],5,"Extreme","9–12","Year-round","Global","Elite physics problem-solving via national selection rounds."],
+["International Chemistry Olympiad (IChO)","Olympiad",["discovery"],5,"Extreme","9–12","Year-round","Global","Top-tier chemistry theory and lab work, through national olympiads."],
+["International Biology Olympiad (IBO)","Olympiad",["discovery","resilience","complex"],5,"Extreme","9–12","Year-round","Global","The leading biology competition, reached via national rounds."],
+["International Economics Olympiad (IEO)","Olympiad",["systems","risk","behavior","fairness"],4,"High","9–12","Multi-month","Global","Economics, finance, and business-case reasoning at a global level."],
+["International Linguistics Olympiad (IOL)","Olympiad",["language","systems","complex"],4,"High","9–12","Multi-month","Global","Decode unfamiliar languages from logic alone; no prior knowledge needed."],
+["Regeneron ISEF","Competition",["discovery","complex","systems","create"],5,"High","9–12","Multi-month","Global","The world's largest pre-college research fair, via affiliated fairs."],
+["Regeneron Science Talent Search","Competition",["discovery","complex"],5,"High","12","Project-based","US (residents)","The most prestigious U.S. science research competition for seniors."],
+["Davidson Fellows Scholarship","Scholarship",["discovery","complex","create","systems"],5,"Extreme","Under 18","Project-based","US (citizens/residents)","Major scholarships for a genuinely significant independent project."],
+["Rise (Schmidt Futures & Rhodes Trust)","Fellowship",["resilience","community","fairness","access","discovery"],5,"High","Ages 15–17","Multi-month","Global","Fully funded global program for teens using their talent to serve others."],
+["Coca-Cola Scholars","Scholarship",["community","fairness","access"],4,"High","12","Application","US","Leadership scholarship recognizing service and impact."],
+["The Diana Award","Fellowship",["community","resilience","access","fairness"],3,"Moderate","9–18","Ongoing","Global","Recognition for young people driving real social change."],
+["World Science Scholars","Fellowship",["discovery","complex","systems"],4,"High","Exceptional in math","Year","Global","Invitation program for mathematically gifted students worldwide."],
+["Research Science Institute (RSI)","Research",["discovery","complex","systems"],5,"Extreme","Rising 12","Summer","Global","Free, elite summer STEM research at MIT; extremely selective."],
+["MIT PRIMES","Research",["systems","complex","discovery","info"],5,"High","9–12","Year","US (commutable / USA)","Year-long mentored research in math, CS, and computational biology."],
+["Pioneer Academics","Research",["discovery","fairness","behavior","language","access"],3,"High","10–11","Summer","Global","Accredited online research with a professor across many fields (paid)."],
+["Polygence","Research",["systems","create","behavior","info","language"],2,"Moderate","9–12","Flexible","Global","One-on-one mentored research project in almost any field (paid)."],
+["Lumiere Research Scholar Program","Research",["discovery","behavior","fairness","systems"],2,"Moderate","9–12","Flexible","Global","Mentored independent research with a PhD guide (paid)."],
+["Garcia Summer Program","Research",["discovery","complex","create"],4,"High","10–11","Summer","US","Materials-science research at Stony Brook; strong publication record."],
+["Simons Summer Research Program","Research",["discovery","complex"],4,"High","11","Summer","US","Mentored STEM research at Stony Brook with a real lab."],
+["Cold-email a university lab","Research",["discovery","systems","complex","resilience"],3,"Varies","10–12","Flexible","Global","Reach out to local professors; the highest-leverage move for many students."],
+["Yale Young Global Scholars (YYGS)","Summer",["fairness","community","info","language","behavior"],3,"Moderate","10–11","Summer","Global","Interdisciplinary residential program with a global cohort."],
+["Stanford Math Camp (SUMaC)","Summer",["systems","complex"],4,"High","10–11","Summer","Global","Deep, proof-based mathematics for serious students."],
+["Ross Mathematics Program","Summer",["systems","complex","discovery"],5,"High","Ages 15–18","Summer","Global","Intense number-theory program built on thinking deeply about simple things."],
+["PROMYS","Summer",["systems","complex"],5,"High","Ages 14–18","Summer","Global","Immersive mathematics through original exploration."],
+["MITES (MIT)","Summer",["discovery","create","systems","access"],4,"High","11","Summer","US (underrepresented)","Rigorous STEM summer for students from underrepresented backgrounds."],
+["LaunchX","Summer",["systems","community","create"],3,"Moderate","10–12","Summer","Global","Build a real startup with a team over the summer."],
+["Telluride Association Summer Seminar","Summer",["fairness","behavior","language","community"],4,"High","10–11","Summer","Global","Free, intellectually intense humanities and social-justice seminar."],
+["Iowa Young Writers' Studio","Summer",["language","create"],3,"Moderate","Rising 11–12","Summer","Global","Selective creative-writing program from a renowned workshop."],
+["John Locke Institute Essay Competition","Writing",["fairness","behavior","language","risk","info"],4,"High","Under 19","Summer deadline","Global","Prestigious essays in philosophy, politics, economics, and more."],
+["The Concord Review","Writing",["complex","fairness","resilience","language"],4,"High","9–12","Ongoing","Global","The only journal publishing serious history research by high schoolers."],
+["Scholastic Art & Writing Awards","Writing",["create","language"],3,"Moderate","7–12","Annual","US (and regions)","The leading recognition for young writers and artists."],
+["Breakthrough Junior Challenge","Competition",["discovery","info","create","language"],3,"Moderate","13–18","Weeks","Global","Explain a big science idea in a short video; large prize."],
+["Technovation Girls","Competition",["create","community","info","access"],3,"Moderate","8–12","Multi-month","Global","Girls build an app to solve a community problem."],
+["Conrad Challenge","Competition",["create","systems","discovery","community"],3,"Moderate","13–18","Multi-month","Global","Team innovation challenge solving real-world problems."],
+["Diamond Challenge","Competition",["systems","community","create","fairness"],3,"Moderate","9–12","Multi-month","Global","High-school entrepreneurship and concept competition."],
+["Congressional App Challenge","Hackathon",["create","info","community"],2,"Moderate","9–12","Weeks","US","Build an app for your district; recognized by Congress."],
+["Major League Hacking (MLH) events","Hackathon",["create","info","systems"],2,"Moderate","All","Weekends","Global","Beginner-friendly hackathons to ship a project fast."],
+["Hack Club","Hackathon",["create","info","community"],2,"Low–Moderate","All","Ongoing","Global","Start or join a global network of student makers and hackathons."],
+["Model UN (HMUN / THIMUN)","Leadership",["fairness","community","language","behavior"],2,"Moderate","9–12","Year","Global","Diplomacy, policy, and persuasion through simulated committees."],
+["Bank of America Student Leaders","Leadership",["community","fairness","access"],3,"Moderate","11–12","Summer","US","Paid nonprofit internship plus a leadership summit."],
+["NYT Student Contests","Writing",["language","info","create"],2,"Moderate","13–19","Recurring","Global","Open writing, review, and multimedia contests with real reach."],
+["Found a community initiative","Community",["community","access","resilience","fairness"],2,"Varies","9–12","Ongoing","Global","Build a real organization around a local need; the most flexible spike."],
+["Run a forecasting / prediction club","Competition",["risk","info","behavior"],2,"Low–Moderate","9–12","Ongoing","Global","Score real predictions over time and build a calibration record."]
+];
+const OPPS = OPP_RAW.map(function(o){return {name:o[0],cat:o[1],lenses:o[2],prestige:o[3],difficulty:o[4],grades:o[5],commitment:o[6],region:o[7],blurb:o[8]};});
+/* ============================ DATA: CREATIVE PROJECT IDEAS ============================ */
+const IDEAS = {
+ systems:[
+  "Stopwatch-audit 150+ visits to a clinic, bank, or government office, map exactly where the queue stalls, and pitch a token-and-parallel-counter redesign the manager can pilot.",
+  "Build an open-source tool that re-schedules your school's exams or bus routes to minimize conflicts, and get the administration to actually adopt it.",
+  "Publish a 'repairability index' that scores the appliances people in your area actually buy, and get a repair or consumer group to cite it.",
+  "Shadow a small business for a week, find its single worst bottleneck, fix it with a simple system, and document the before-and-after numbers.",
+  "Reverse-engineer how your city's informal transit (rickshaws, minibuses) routes itself, and propose one change that would cut average wait times.",
+  "Run a public 'inefficiency log' where you redesign one badly-run process a week with diagrams, and let readers vote on the worst offenders.",
+  "Build a dashboard that tracks a resource your community fights over (water tankers, parking, lab slots) and proposes a fairer allocation rule."],
+ behavior:[
+  "Run a small pre-registered experiment on a behavior that puzzles you (why classmates procrastinate, why people skip queues) and publish the results, including what failed.",
+  "Design a 'nudge' for your school (how lockers, sign-ups, or reminders are framed), test it on two groups, and measure whether behavior actually changed.",
+  "Interview 40 people about one everyday decision (how they choose what to study, save, or buy) and map the hidden reasons behind the stated ones.",
+  "Build a habit-tracking tool around one behavioral principle (commitment devices, loss aversion) and recruit real users to test whether it works.",
+  "Analyze a public behavioral dataset (donations, attendance, app usage) to find one counterintuitive pattern, and write it up for a general audience.",
+  "Mystery-shop a process people complain about, document the friction points that quietly drive behavior, and propose redesigns.",
+  "Keep a 'why did they do that' field journal: weekly write-ups dissecting one real behavior using actual psychology, not armchair theory."],
+ fairness:[
+  "Audit a real rule at your school or local body (how scholarships, fines, or spots are allocated), find the bias, and draft a transparent replacement rubric that gets adopted.",
+  "Build a 'know your rights' chatbot or one-pager for a group that gets exploited locally (tenants, domestic workers, daily-wage laborers).",
+  "Use public data to expose one specific local inequity (who gets the new road, the funded school, the clinic) and turn it into a petition backed by evidence.",
+  "Run a small-claims or arbitration clinic that helps people actually resolve a common dispute, and track the outcomes.",
+  "Compare how a single policy plays out in two neighborhoods, document the gap, and present it to the people who can change it.",
+  "Design a fairer version of a selection process you have been on the losing side of, and pilot it with a club or competition.",
+  "Map every step where an overlooked group falls out of a system (enrollment, hiring, aid) and build one tool that closes one of those gaps."],
+ risk:[
+  "Build a public dashboard that predicts which local rumors are real (power cuts, school closures, fuel shortages) by combining past schedules with crowd reports.",
+  "Run a school 'Calibration League' where students stake reputation points on real-world forecasts and are scored on accuracy, not confidence.",
+  "Reverse-engineer a formula people trust (cricket's Duckworth-Lewis, a grading curve, an insurance rule), find a flaw, and propose a correction publicly.",
+  "Forecast a recurring local risk (monsoon flooding on your street, dengue season) from open data and publish a calibrated weekly outlook.",
+  "Run a tiny prediction market among friends on real events and write up what it reveals about how people misjudge odds.",
+  "Take one decision your family or school makes by gut (inventory, scheduling, savings) and model it as a bet with explicit probabilities.",
+  "Write a column that translates one probability idea a week into a real decision people face, with the math shown."],
+ discovery:[
+  "Replicate a published study with cheap improvised equipment, document exactly where it fails to reproduce, and write up why.",
+  "Build a scientific instrument from household parts (a spectrophotometer, spirometer, or seismograph) and validate it against the real thing.",
+  "Pick one 'everybody knows' claim in your environment and design a controlled experiment that actually tests it.",
+  "Cold-email five local professors with a specific question and a plan, and turn a yes into a real mentored investigation.",
+  "Run a long-term measurement project (local air, water, soil, or light pollution) and release the open dataset others can build on.",
+  "Take a phenomenon you can watch (mold growth, crystal formation, plant tropism) and chase it down to its mechanism with real trials.",
+  "Start a science blog that does not explain textbook facts but documents your own ongoing experiments, dead ends included."],
+ info:[
+  "Trace how one real rumor or trend spread through your community, reconstruct the network, and visualize where the truth got distorted.",
+  "Build a lightweight fact-check tool or sticker pack for the platform your relatives actually use (WhatsApp, TikTok).",
+  "Scrape and analyze a local information source (a news site, a forum, market prices) to surface one signal nobody had noticed.",
+  "Run an experiment on how framing changes what people believe or share, using real posts, and publish the finding.",
+  "Map who controls information in a system you know (a school, a market) and build one tool that routes it more honestly.",
+  "Turn a confusing public dataset into a dashboard a normal person can actually read and act on.",
+  "Start a 'how this spread' newsletter dissecting one viral claim a week with network diagrams and sources."],
+ resilience:[
+  "Build something that helps your community survive a recurring shock (a solar study-lamp library for outages, a flood-alert SMS line).",
+  "Map the single point of failure in a local system everyone depends on (water, power, transport) and propose how to make it fail gracefully.",
+  "Run a preparedness drill or kit program for a specific risk your area faces, and measure whether households are actually readier.",
+  "Document how one neighborhood absorbed a real shock better than another, find the difference, and turn it into a playbook.",
+  "Build a low-cost backup for a fragile service people rely on (a charging bank during outages, a medicine cold-box).",
+  "Interview people who recovered from a local crisis, extract what actually helped, and publish it as a resilience guide.",
+  "Stress-test your school's or clinic's emergency plan, find where it breaks, and rewrite the weakest part with them."],
+ community:[
+  "Found a small institution around a real local need (a repair café, a tool library, a study hall) and build it to outlast you with a handoff plan.",
+  "Run a needs assessment of your neighborhood, then build the one thing people actually asked for, not what you assumed.",
+  "Turn a one-off service you already do into a self-sustaining program with members, records, and a trained successor.",
+  "Organize a group that has no voice in a local decision, and get them a seat at the table where it is made.",
+  "Map the assets, not just the problems, of your community, and connect two that have never worked together.",
+  "Build a skills-exchange or mutual-aid network where people trade what they can do, and track what it sustains.",
+  "Document a local trade or tradition at risk of disappearing, and build something that keeps it alive."],
+ complex:[
+  "Model a complex system you can watch (traffic at one intersection, a local market, an ant colony) and find the simple rule that drives it.",
+  "Take a method from one field and apply it somewhere unexpected (epidemiology to rumor spread, ecology to a friend group).",
+  "Build an agent-based simulation of a real local phenomenon and compare it against what actually happens.",
+  "Find the same structure in two unrelated systems you know, and write the essay or paper that connects them.",
+  "Map a network you are inside (who talks to whom in a club, how a supply chain links up) and find its hidden hubs.",
+  "Simulate how a small change ripples through a system people assume is simple, and show where intuition fails.",
+  "Track an emergent pattern over time (a queue forming, a trend cascading) and reverse-engineer the rules behind it."],
+ create:[
+  "Build and release something that did not exist (a generative-art tool from your script or calligraphy, an instrument, a weirdly useful app) and get real users.",
+  "Combine a craft you love with code or hardware: turn music into visuals, poems into animations, or sensors into art.",
+  "Make a tool that solves your own niche annoyance so well that strangers start using it.",
+  "Build an interactive explainer or game that teaches one hard idea better than any textbook, and ship it.",
+  "Create a physical-digital hybrid (a projection, an installation, a wearable) and show it somewhere public.",
+  "Open-source a small creative tool and grow a tiny community of people remixing it.",
+  "Run a 30-day build challenge where you ship one small original thing a day and document it."],
+ access:[
+  "Build a free resource that reaches students the system skips (offline-friendly lessons, a past-paper bank, a voice-note tutoring line) and measure real reach.",
+  "Translate or adapt high-quality learning material into the language or format your community actually uses.",
+  "Run a program that makes learners independent (teach them to teach, or to find resources) rather than dependent on you.",
+  "Use data to expose one specific access gap in your area (who has labs, who has counselors) and pitch a fix.",
+  "Build a tool that demystifies a gate-keeping process (applications, scholarships, exams) for first-generation students.",
+  "Set up a peer network that scales past you, with materials, a structure, and someone trained to run it next year.",
+  "Find students one step behind you and build the exact thing you wish had existed for you."],
+ language:[
+  "Build a translation or transliteration tool that solves a real gap (so elders can read how your generation types, so two groups can finally talk).",
+  "Translate local poetry, jokes, or oral history into another language while preserving what usually gets lost, and blog what resists translation.",
+  "Run a workshop pairing people who speak different languages or registers to co-translate something that matters to them.",
+  "Collect and analyze the slang, code-switching, or untranslatable words of your community as a real linguistics project.",
+  "Document a dying dialect or way of speaking before it disappears, with recordings and analysis.",
+  "Mediate a real disagreement by reframing the words both sides use, and write up what changed.",
+  "Build a guide that helps one group understand another (patients and doctors, migrants and offices) by fixing the language between them."]
+};
+const ENV_IDEAS = {
+ systems:["Optimize a wasteful environmental process locally (water use in a building, food waste in a canteen, delivery routes) and document the resources saved.","Build a tool that scores local products or appliances on energy use and repairability, nudging greener choices.","Redesign your school's waste or energy system and measure the before-and-after footprint."],
+ behavior:["Run a behavioral experiment on what actually makes people recycle, save power, or waste less, and publish what works.","Design and test a nudge that cuts one environmental behavior (idling, single-use plastic) in your community.","Survey why people resist a green change locally, and map the real (often non-environmental) reasons."],
+ fairness:["Map who bears the cost of a local environmental harm (which neighborhood gets the dump, the smog, the floods) and turn it into evidence.","Investigate unequal access to clean water, air, or green space in your area and propose a fairer rule.","Document one case of environmental injustice and bring it to the body that can act."],
+ risk:["Forecast a climate-linked local risk (flooding, heatwaves, crop failure) from open data and publish a calibrated outlook.","Model the risk-and-cost tradeoffs of a local green investment (solar, drainage) so people can decide with numbers.","Build an early-warning tool for an environmental hazard your area faces."],
+ discovery:["Run a long-term environmental measurement project (air, water, soil, biodiversity) and release the open dataset.","Build a cheap sensor to monitor a local environmental variable and validate it against official readings.","Test a local environmental claim experimentally: is this water safe, is this filter actually working."],
+ info:["Map how environmental misinformation spreads locally and build a tool that counters it.","Turn confusing local environmental data (pollution, water quality) into something people can read and act on.","Track and visualize a local environmental trend over time from public sources."],
+ resilience:["Build something that helps your community withstand a climate shock (heat shelters, flood alerts, a water backup).","Map your area's climate vulnerabilities and propose how to make the weakest system fail gracefully.","Document how a community adapted to an environmental shock and turn it into a playbook."],
+ community:["Found a local environmental institution (a community garden, a recycling co-op, a repair café) built to outlast you.","Organize residents around one shared environmental problem and get them to the decision table.","Build a self-sustaining mutual-aid network around an environmental need (water sharing, tree planting, clean-ups)."],
+ complex:["Model a local ecosystem or environmental system and find the simple rule driving its behavior.","Simulate how a small environmental change ripples through a system people assume is stable.","Map an environmental network (a watershed, a food system) and find its hidden leverage points."],
+ create:["Build a creative tool or experience that makes an environmental problem visceral (data art from pollution, a game about tradeoffs).","Make a device that turns an environmental signal into something people can see or feel.","Design an installation or app that changes how your community sees a local environmental issue."],
+ access:["Build free environmental-education resources for students who never get them, in the language they use.","Teach a community to monitor and act on their own environmental risks, independent of experts.","Make a tool that helps underserved students reach green scholarships, programs, or careers."],
+ language:["Translate environmental information into the languages and formats your community actually uses.","Document how a community talks about nature, weather, or land, and use it to communicate climate risk better.","Bridge the language gap between environmental experts and the people most affected by their decisions."]
+};
+function hashStr(s){var h=0;s=String(s||"");for(var i=0;i<s.length;i++){h=((h<<5)-h+s.charCodeAt(i))|0;}return Math.abs(h);}
+/* ============================ QUESTIONS ============================ */
+function C(t,w){return {t:t,w:w};}
+const STEPS = [
+ {key:"curiosity",title:"Core Curiosities",sub:"What genuinely pulls your attention, with or without a reason.",
+  qs:[
+   {id:"c_pull",type:"chips",label:"Which of these problems genuinely pull your attention?",hint:"Pick the 2 to 4 that feel most like you.",max:4,chips:[
+     C("Why systems break down or run inefficiently",{systems:3,complex:1}),
+     C("Why people behave the way they do",{behavior:3}),
+     C("Who gets left out, and whether that's fair",{fairness:3,access:1}),
+     C("How to make good decisions when the future is uncertain",{risk:3}),
+     C("How the natural world actually works",{discovery:3}),
+     C("How information, ideas, or trends spread",{info:3,behavior:1}),
+     C("How people and places recover from hardship",{resilience:3,community:1}),
+     C("How communities grow stronger",{community:3}),
+     C("How many small parts create a complex whole",{complex:3,systems:1}),
+     C("How technology can create new experiences or art",{create:3}),
+     C("Why opportunity, especially education, is unequal",{access:3,fairness:1}),
+     C("How language and meaning shape understanding",{language:3,behavior:1})]},
+   {id:"c_rabbit",type:"text",label:"What do you research or fall down rabbit holes about, even when nobody asks?",hint:"Be specific. A topic, a channel, a question you keep returning to."},
+   {id:"c_question",type:"text",label:"What question has stayed with you for years?",hint:"Something you have wondered about for a long time, even if it sounds simple."},
+   {id:"c_media",type:"chips",label:"What do you spend the most time watching, reading, or listening to?",hint:"Pick any that apply.",max:5,chips:[
+     C("How-things-work, engineering, builds",{systems:2,discovery:1,create:1}),
+     C("Science and nature",{discovery:2,complex:1}),
+     C("Psychology and human behavior",{behavior:2}),
+     C("Politics, policy, and justice",{fairness:2,community:1}),
+     C("Business, economics, and markets",{systems:1,risk:1,behavior:1}),
+     C("Tech, coding, and startups",{create:2,info:1,systems:1}),
+     C("Social issues and inequality",{access:2,fairness:1}),
+     C("History and how the present came to be",{complex:1,fairness:1,resilience:1}),
+     C("Data, probability, and predictions",{risk:2,info:1}),
+     C("Art, design, music, film, writing",{create:2,language:1})]}
+  ]},
+ {key:"frustration",title:"Recurring Frustrations",sub:"Frustration is involuntary, which makes it an honest guide to what you value.",
+  qs:[
+   {id:"f_world",type:"text",label:"What problem in the world genuinely frustrates you?",hint:"Pick one you actually feel, and say why it bothers you."},
+   {id:"f_betterway",type:"chips",label:"Which 'there has to be a better way' bothers you most?",hint:"Pick the 1 to 3 that ring truest.",max:3,chips:[
+     C("Waste and inefficiency",{systems:3}),
+     C("Unfairness and exclusion",{fairness:3,access:1}),
+     C("Misinformation and confusion",{info:3}),
+     C("Things that are badly designed or break easily",{systems:2,create:1}),
+     C("People talking past each other, not understanding",{language:2,behavior:1}),
+     C("Preventable harm and suffering",{resilience:2,community:1,fairness:1}),
+     C("Unequal access to opportunity",{access:3}),
+     C("Decisions made without good evidence",{risk:2,discovery:1})]},
+   {id:"f_fix",type:"text",label:"Describe a time you thought, 'I could fix this.'",hint:"Optional. What was the problem, and what did you imagine doing?"}
+  ]},
+ {key:"behavior",title:"Behavioral Patterns",sub:"What you actually do when no one is assigning it.",
+  qs:[
+   {id:"b_started",type:"text",label:"What have you started on your own?",hint:"A project, club, blog, build, business, anything. Even abandoned ones count."},
+   {id:"b_losetime",type:"chips",label:"What makes you lose track of time?",hint:"Pick the 2 to 4 that pull you in most.",max:4,chips:[
+     C("Building, coding, or making things",{create:2,systems:1}),
+     C("Finding patterns in data or information",{info:2,risk:1,complex:1}),
+     C("Organizing people, events, or teams",{community:2,systems:1}),
+     C("Writing or explaining ideas clearly",{language:2,info:1}),
+     C("Designing, drawing, composing, performing",{create:3}),
+     C("Taking things apart, fixing, experimenting",{discovery:2,systems:1}),
+     C("Debating, arguing, persuading",{fairness:1,language:1,behavior:1}),
+     C("Helping or mentoring someone one-on-one",{access:1,community:1,resilience:1}),
+     C("Researching a question deeply",{discovery:2,complex:1})]},
+   {id:"b_freetime",type:"text",label:"How do you spend a free afternoon when nothing is due?",hint:"Be honest, not aspirational."}
+  ]},
+ {key:"values",title:"Values",sub:"What kind of impact actually matters to you.",
+  qs:[
+   {id:"v_impact",type:"chips",label:"What kind of impact matters most to you?",hint:"Pick the 1 to 3 closest to your core.",max:3,chips:[
+     C("Expanding access and opportunity",{access:3}),
+     C("Making systems work better for everyone",{systems:2,fairness:1}),
+     C("Advancing human knowledge",{discovery:3}),
+     C("Protecting and supporting vulnerable people",{resilience:2,community:1,fairness:1}),
+     C("Creating beauty or new experiences",{create:3}),
+     C("Increasing fairness and justice",{fairness:3}),
+     C("Helping people understand each other and the truth",{info:2,language:1}),
+     C("Building strong, resilient communities",{community:3,resilience:1})]},
+   {id:"v_admire",type:"text",label:"Who do you admire, and what specifically about them?",hint:"Real or known. The 'what specifically' matters more than the who."},
+   {id:"v_years",type:"text",label:"What problem would be worth dedicating years of your life to?",hint:"Don't worry about whether it sounds impressive. What would actually hold you?"}
+  ]},
+ {key:"background",title:"About You & Your Background",sub:"Where you come from, and the direction you are heading. This sharpens your theme.",
+  qs:[
+   {id:"meta",type:"meta"},
+   {id:"bg",type:"text",label:"Your background and cultural ties",hint:"Heritage, languages you speak, family, community, faith, identity. Whatever has shaped how you see the world."},
+   {id:"env",type:"text",label:"The environment and circumstances you come from",hint:"Where you grew up, your school, and any resources or constraints that shaped what was available to you. This is the context a reader uses to interpret everything else."},
+   {id:"ctx_include",type:"chips",label:"Would you like your background and environment to be part of your application story?",hint:"There is no wrong answer. Used well, your context explains where your theme came from and why it genuinely matters to you.",max:1,chips:[
+     C("Yes, weave it into my theme and essays",{}),
+     C("Maybe, show me how it could fit",{}),
+     C("No, keep it separate from my theme",{})]},
+   {id:"env_integrate",type:"chips",label:"Do you want to connect your work to the environment or sustainability?",hint:"Optional. If yes, your project ideas come with an environmental angle (think environmental studies, climate, sustainability), woven into your existing theme rather than replacing it.",max:1,chips:[
+     C("Yes, give my projects an environmental angle",{}),
+     C("Maybe, show me how it could fit",{}),
+     C("No, keep my theme as is",{})]}
+  ]},
+ {key:"activities",title:"Your Activities",sub:"What you have done so far. This drives your gap analysis and roadmap.",
+  qs:[
+   {id:"acts",type:"activities"}
+  ]}
+];
+const ACT_CATS = ["Club","Competition / Olympiad","Research","Internship","Leadership","Volunteering","Personal project","Business","Writing / Creative","Employment","Award / Honor","Other"];
+/* ============================ STATE ============================ */
+const state = {step:0,chips:{},text:{},grade:"",field:"",acts:[{name:"",cat:""},{name:"",cat:""},{name:"",cat:""}],result:null};
+const $ = function(s){return document.querySelector(s);};
+const esc = function(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");};
+/* ============================ NAV ============================ */
+function show(id){document.querySelectorAll(".screen").forEach(function(s){s.classList.remove("active");});$(id).classList.add("active");window.scrollTo({top:0,behavior:"smooth"});}
+function startAssessment(){state.step=0;renderStep();show("#screen-assessment");$("#tb-status").textContent="Assessment in progress";}
+function renderStep(){
+  var st=STEPS[state.step];
+  var pct=Math.round((state.step/STEPS.length)*100);
+  $("#step-label").textContent="Section "+(state.step+1)+" of "+STEPS.length;
+  $("#step-pct").textContent=pct+"% complete";
+  $("#pbar-fill").style.width=((state.step/(STEPS.length-1))*100)+"%";
+  $("#steplist").innerHTML=STEPS.map(function(s,i){return '<span class="s '+(i<state.step?"done":i===state.step?"cur":"")+'">'+(i<state.step?"\u2713 ":"")+esc(s.title)+'</span>';}).join("");
+  var h='<div class="sec-title serif">'+esc(st.title)+'</div><div class="sec-sub">'+esc(st.sub)+'</div>';
+  st.qs.forEach(function(q){h+=renderQ(q);});
+  $("#qcard").innerHTML=h;bindStep();
+  $("#backbtn").style.visibility=state.step===0?"hidden":"visible";
+  $("#nextbtn").textContent=state.step===STEPS.length-1?"See my throughline →":"Next →";
+  updateAnsweredNote();
+}
+function renderQ(q){
+  if(q.type==="meta"){
+    return '<div class="q"><div class="qlabel">A little about you</div>'+
+      '<div class="metarow"><div><label>Current grade</label><select data-meta="grade">'+
+      ['','9th grade','10th grade','11th grade','12th grade','Other / gap'].map(function(g){return '<option value="'+esc(g)+'"'+(state.grade===g?' selected':'')+'>'+(g===""?"Select…":esc(g))+'</option>';}).join("")+
+      '</select></div><div><label>Intended field or major <span style="color:#B0851F;font-weight:700">· strongly recommended</span></label><input type="text" id="field-input" data-meta="field" placeholder="e.g. mechanical engineering (a rough direction is fine)" value="'+esc(state.field)+'"></div></div>'+
+      '<div class="qhint" id="major-tip" style="margin-top:11px">Even a rough direction helps a lot. The same underlying pattern can read very differently depending on your major: a pull toward <b>uncertainty</b>, for example, can look like economics, statistics, or engineering. Telling us your direction keeps your theme anchored to it instead of drifting somewhere you do not intend.</div></div>';
+  }
+  if(q.type==="activities"){
+    var rows=state.acts.map(function(a,i){return '<div class="actrow"><input type="text" data-act="'+i+'" data-f="name" placeholder="Activity, role, or achievement (e.g. founded a repair café)" value="'+esc(a.name)+'">'+
+      '<select data-act="'+i+'" data-f="cat"><option value="">Category…</option>'+ACT_CATS.map(function(c){return '<option value="'+esc(c)+'"'+(a.cat===c?' selected':'')+'>'+esc(c)+'</option>';}).join("")+'</select>'+
+      '<button class="rm" data-rm="'+i+'" title="Remove">×</button></div>';}).join("");
+    return '<div class="q"><div class="qlabel">List your current activities, awards, and projects</div><div class="qhint">Add as many as you have. One line each is fine. Empty rows are ignored.</div>'+rows+'<button class="addbtn" data-addact="1">+ Add another</button></div>';
+  }
+  var h='<div class="q"><div class="qlabel">'+esc(q.label)+'</div><div class="qhint">'+esc(q.hint||"")+'</div>';
+  if(q.type==="chips"){
+    var sel=state.chips[q.id]||[];
+    h+='<div class="chips">'+q.chips.map(function(c,i){return '<button class="chip'+(sel.indexOf(i)>=0?' sel':'')+'" data-chip="'+q.id+'" data-i="'+i+'"'+(q.max?' data-max="'+q.max+'"':'')+'>'+esc(c.t)+'</button>';}).join("")+'</div>';
+  }else if(q.type==="text"){
+    h+='<textarea data-text="'+q.id+'" placeholder="Type your answer…">'+esc(state.text[q.id]||"")+'</textarea>';
+  }
+  return h+'</div>';
+}
+function bindStep(){
+  var card=$("#qcard");
+  card.querySelectorAll('[data-chip]').forEach(function(b){b.onclick=function(){
+    var id=b.getAttribute("data-chip"),i=+b.getAttribute("data-i"),max=+(b.getAttribute("data-max")||99);
+    var arr=state.chips[id]||[];var p=arr.indexOf(i);
+    if(p>=0){arr.splice(p,1);}else{if(arr.length>=max){arr.shift();}arr.push(i);}
+    state.chips[id]=arr;
+    card.querySelectorAll('[data-chip="'+id+'"]').forEach(function(x){x.classList.toggle("sel",arr.indexOf(+x.getAttribute("data-i"))>=0);});
+    updateAnsweredNote();
+  };});
+  card.querySelectorAll('[data-text]').forEach(function(t){t.oninput=function(){state.text[t.getAttribute("data-text")]=t.value;updateAnsweredNote();};});
+  card.querySelectorAll('[data-meta]').forEach(function(m){m.onchange=m.oninput=function(){var k=m.getAttribute("data-meta");if(k==="grade")state.grade=m.value;else state.field=m.value;};});
+  card.querySelectorAll('[data-act]').forEach(function(el){el.oninput=el.onchange=function(){var i=+el.getAttribute("data-act"),f=el.getAttribute("data-f");state.acts[i][f]=el.value;};});
+  card.querySelectorAll('[data-rm]').forEach(function(b){b.onclick=function(){var i=+b.getAttribute("data-rm");state.acts.splice(i,1);if(state.acts.length===0)state.acts.push({name:"",cat:""});renderStep();};});
+  var add=card.querySelector('[data-addact]');if(add)add.onclick=function(){state.acts.push({name:"",cat:""});renderStep();};
+}
+function updateAnsweredNote(){
+  var st=STEPS[state.step];var answered=0,total=0;
+  st.qs.forEach(function(q){if(q.type==="chips"){total++;if((state.chips[q.id]||[]).length)answered++;}else if(q.type==="text"){total++;if((state.text[q.id]||"").trim())answered++;}});
+  $("#answered-note").textContent= total? (answered+" of "+total+" answered"):"";
+}
+function prevStep(){if(state.step>0){state.step--;renderStep();}}
+var majorPrompted=false;
+function nextStep(){
+  var cur=STEPS[state.step];
+  if(cur.key==="background" && !(state.field&&state.field.trim()) && !majorPrompted){
+    majorPrompted=true;
+    var tip=$("#major-tip"),fi=$("#field-input");
+    if(tip){tip.innerHTML="A quick nudge: add your intended major above for a theme anchored to your direction. You can still continue without it.";tip.style.color="#9A6212";tip.style.fontWeight="600";}
+    if(fi){fi.style.borderColor="#B0851F";fi.style.boxShadow="0 0 0 3px rgba(176,133,31,.18)";fi.focus();}
+    return;
+  }
+  if(state.step<STEPS.length-1){state.step++;renderStep();return;}
+  runAnalysis();
+}
+/* ============================ SCORING (heuristic) ============================ */
+function computeScores(){
+  var sc={};LENS_ORDER.forEach(function(l){sc[l]=0;});
+  STEPS.forEach(function(st){st.qs.forEach(function(q){if(q.type==="chips"){(state.chips[q.id]||[]).forEach(function(i){var w=q.chips[i].w;for(var k in w)sc[k]+=w[k];});}});});
+  var text=Object.keys(state.text).filter(function(k){return k!=="bg"&&k!=="env";}).map(function(k){return state.text[k];}).join(" ").toLowerCase()+" "+state.acts.map(function(a){return a.name;}).join(" ").toLowerCase()+" "+(state.field||"").toLowerCase();
+  LENS_ORDER.forEach(function(l){var hits=0;LENSES[l].kw.forEach(function(k){if(text.indexOf(k)>=0)hits++;});sc[l]+=Math.min(hits,4)*1.4;});
+  var cats=state.acts.map(function(a){return a.cat;});
+  if(cats.indexOf("Research")>=0){sc.discovery+=1.2;sc.complex+=0.6;}
+  if(cats.indexOf("Business")>=0){sc.systems+=1;sc.community+=0.5;}
+  if(cats.indexOf("Writing / Creative")>=0){sc.language+=1;sc.create+=0.8;}
+  if(cats.indexOf("Volunteering")>=0){sc.community+=1;sc.access+=0.6;}
+  if(cats.indexOf("Leadership")>=0){sc.community+=0.7;sc.systems+=0.5;}
+  return sc;
+}
+function rankLenses(sc){return LENS_ORDER.slice().sort(function(a,b){return sc[b]-sc[a];});}
+function scaleScores(sc,ranked){var max=Math.max(1,sc[ranked[0]]);var out={};ranked.forEach(function(l){out[l]=Math.round((sc[l]/max)*100);});return out;}
+function confidenceFrom(sc,ranked){
+  var total=ranked.reduce(function(s,l){return s+sc[l];},0)||1;var top=sc[ranked[0]],sec=sc[ranked[1]]||0;
+  var share=top/total, sep=top?(top-sec)/top:0;
+  return Math.max(54,Math.min(93,Math.round(56+share*70+sep*40)));
+}
+var AIM={
+  systems:["who makes the processes people depend on run better and more fairly.","obsessed with finding the one lever that makes a whole system work better.","who redesigns the systems most people just put up with."],
+  behavior:["who studies why people act as they do and designs better choices.","who looks past what people say to the incentives that actually move them.","who treats human behavior as something to be tested, not assumed."],
+  fairness:["who redesigns institutions so opportunity reaches the people the system overlooks.","who traces unfair outcomes back to the rule that produced them, and rewrites it.","who pairs moral seriousness about justice with the analysis to actually fix it."],
+  risk:["who reasons clearly under uncertainty and helps others act on incomplete information.","who turns guesswork into calibrated decisions when the future is unknown.","fluent in probability where most people rely on gut feeling."],
+  discovery:["driven to understand how the natural world works, from first principles to real experiments.","who cares less about scientific facts than about how they are established.","who answers questions by building the experiment instead of looking up the answer."],
+  info:["who maps how ideas move and builds tools that help the truth travel faster than the noise.","fascinated by how knowledge and rumor spread, and where the signal breaks down.","who thinks in networks and builds for a clearer, more honest flow of information."],
+  resilience:["who studies how people and systems withstand shocks, and strengthens the ones that protect the vulnerable.","drawn to the weak point that decides who recovers from a crisis and who does not.","who builds for the worst day rather than the average one."],
+  community:["who turns local problems into durable institutions that make a place stronger from the inside.","who builds things that outlast them, with real members and a handoff plan.","who starts from the people closest to a problem and builds with them, not for them."],
+  complex:["fascinated by how complex wholes emerge from simple parts, across nature, society, and technology.","who finds the same hidden structure in systems no one else thinks to connect.","drawn to emergence, where simple rules produce behavior no single part contains."],
+  create:["working at the seam of art and engineering to build experiences that did not exist before.","who refuses to choose between making things beautiful and making them work.","who ships original creative-technical work for real people, not just for show."],
+  access:["who works to widen the gate to education and opportunity for underserved students.","who moves from tutoring one person to fixing the system that left them behind.","who builds learning resources that scale far beyond themselves."],
+  language:["who helps people, ideas, and cultures understand one another.","fascinated by what gets carried and lost when meaning crosses a border.","who treats language as a system to be understood, not just a medium to use."]
+};
+var ROLE={systems:"systems thinker",behavior:"student of human behavior",fairness:"fairness-minded thinker",risk:"decision thinker",discovery:"young scientist",info:"information thinker",resilience:"builder of resilience",community:"community builder",complex:"systems scientist",create:"creative technologist",access:"advocate for access",language:"student of language"};
+function anchorFromField(field){
+  var f=field.toLowerCase();
+  var map=[["aerospace","aerospace engineer"],["mechanical","mechanical engineer"],["electrical","electrical engineer"],["civil","civil engineer"],["chemical eng","chemical engineer"],["biomed","biomedical engineer"],["software eng","software engineer"],["industrial eng","industrial engineer"],["engineer","engineer"],["econ","economist"],["comput","computer scientist"],["software","software engineer"],["data","data scientist"],["statist","statistician"],["math","mathematician"],["physic","physicist"],["chemist","chemist"],["neuro","neuroscientist"],["bioeng","bioengineer"],["bio","biologist"],["psych","psychologist"],["sociolog","sociologist"],["public health","public-health researcher"],["health","health researcher"],["public policy","policy thinker"],["policy","policy thinker"],["politic","political scientist"],["law","future lawyer"],["govern","policy thinker"],["entrep","entrepreneur"],["business","entrepreneur"],["financ","finance thinker"],["architect","architect"],["urban","urbanist"],["design","designer"],["media","media maker"],["film","filmmaker"],["music","musician"],["art","artist"],["linguist","linguist"],["languag","linguist"],["literat","writer"],["writ","writer"],["histor","historian"],["philosoph","philosopher"],["environment","environmental scientist"],["education","education researcher"]];
+  for(var i=0;i<map.length;i++){if(f.indexOf(map[i][0])>=0)return map[i][1];}
+  return field.trim()+" student";
+}
+function aOrAn(n){return /^[aeiou]/i.test(n)?"An":"A";}
+function themeFor(lens,field){
+  var aims=AIM[lens];
+  var seed=hashStr((state.text.c_rabbit||"")+(state.text.f_world||"")+(state.text.b_started||"")+(field||"")+lens);
+  var aim=aims[seed%aims.length];
+  var hasField=field&&field.trim()&&field.toLowerCase().indexOf("undecid")<0;
+  var noun=hasField?anchorFromField(field.trim()):ROLE[lens];
+  return aOrAn(noun)+" "+noun+" "+aim;
+}
+/* ============================ THEME + ANALYSIS SYNTHESIS ============================ */
+// Secondary-lens "flavor" phrases, woven into the theme and worldview. Two variants each.
+var BLEND={
+ systems:["an eye for the process underneath","an instinct for the system most people just tolerate"],
+ behavior:["a read on what actually moves people","an ear for the motive beneath the stated reason"],
+ fairness:["a sharp sense of who gets left out","a refusal to accept a rule that is quietly rigged"],
+ risk:["a habit of thinking in probabilities","a comfort with uncertainty that most people avoid"],
+ discovery:["a need to test things for yourself","a pull toward how things actually work"],
+ info:["a feel for how ideas and noise travel","an instinct for where the signal breaks down"],
+ resilience:["an eye for the weak point before it breaks","a concern for whoever absorbs the shock"],
+ community:["a builder's instinct for what lasts","a pull toward the people closest to the problem"],
+ complex:["an eye for hidden structure","a pull toward how parts become a whole"],
+ create:["a maker's drive to actually build the thing","a refusal to separate beauty from function"],
+ access:["a focus on who never got the chance","a drive to widen the gate behind you"],
+ language:["an ear for what gets lost in translation","a focus on being understood across a divide"]
+};
+// Clean noun-phrase form of each lens's core question, for splicing into prose.
+var ESSENCE_NP={
+ systems:"how the systems people rely on can be made to work better",
+ behavior:"why people actually behave the way they do",
+ fairness:"who gets left out, and whether the rules are fair",
+ risk:"how to act well when the future cannot be known",
+ discovery:"how the natural world actually works underneath",
+ info:"how ideas and information really move between people",
+ resilience:"what lets some people and systems survive a shock when others break",
+ community:"how a place is made stronger from the inside",
+ complex:"how complicated wholes emerge from simple parts",
+ create:"how to build something that is expressive and also works",
+ access:"why opportunity is so unevenly shared, and how to widen it",
+ language:"how meaning is carried, lost, and rebuilt between people"
+};
+function rot(arr,n){var k=arr.length?(n%arr.length):0;return arr.slice(k).concat(arr.slice(0,k));}
+function cap(s){return s?s.charAt(0).toUpperCase()+s.slice(1):s;}
+function clipTo(s,n){s=String(s||"").replace(/\s+/g," ").trim();return s.length>n?s.slice(0,n-1)+"…":s;}
+// Main theme: anchor (major) + primary aim + a secondary-lens flavor, varied by the student's own words.
+function composeTheme(primary,secondary,field){
+  var seed=hashStr((state.text.c_rabbit||"")+(state.text.f_world||"")+(state.text.b_started||"")+(state.text.v_admire||"")+(field||""));
+  var aim=AIM[primary][seed%AIM[primary].length].replace(/\.$/,"");
+  var hasField=field&&field.trim()&&field.toLowerCase().indexOf("undecid")<0;
+  var noun=hasField?anchorFromField(field.trim()):ROLE[primary];
+  var blend=BLEND[secondary][(seed>>2)%BLEND[secondary].length];
+  var tails=[", with "+blend+".", ", carrying "+blend+".", ", paired with "+blend+"."];
+  var tail=tails[(seed>>4)%tails.length];
+  return aOrAn(noun)+" "+noun+" "+aim+tail;
+}
+// Deep analysis synthesized from the top two lenses AND the student's actual answers.
+function buildAnalysis(primary,secondary){
+  var P=LENSES[primary],S=LENSES[secondary];
+  var rabbit=clipTo(state.text.c_rabbit,120), longq=clipTo(state.text.c_question,120), frust=clipTo(state.text.f_world,120);
+  var built=clipTo(state.text.b_started,120), admire=clipTo(state.text.v_admire,120), env=clipTo(state.text.env,120);
+  var cs=state.chips.ctx_include||[]; var wantsCtx=cs.length&&(cs[0]===0||cs[0]===1);
+
+  // recurring questions: one from each lens (rotated by their words) + one drawn from their own input
+  var sQ=hashStr(frust+rabbit+primary+secondary);
+  var questions=[ rot(P.questions,sQ)[0], rot(S.questions,sQ>>3)[0] ];
+  if(longq) questions.push("And the one you have carried for a while: \u201C"+longq+"\u201D");
+  else if(frust) questions.push("Underneath your frustration: why does \u201C"+frust+"\u201D persist, and what would actually change it?");
+  else if(rabbit) questions.push("What keeps pulling you back to \u201C"+rabbit+"\u201D?");
+  else questions.push(rot(P.questions,sQ>>6)[0]);
+  questions=questions.filter(function(q,i,a){return a.indexOf(q)===i;});
+
+  // worldview: primary worldview + a blended secondary sentence + their own evidence
+  var sW=hashStr(built+admire+primary+secondary);
+  var conn=["Your answers pair that with ","What makes it yours is the second thread running through them: ","Layered over that is "];
+  var worldview=P.worldview+" "+conn[sW%conn.length]+BLEND[secondary][(sW>>3)%BLEND[secondary].length]+", and it is the combination, not either half alone, that is worth building on.";
+  if(built) worldview+=" It already shows in something you started without being asked: \u201C"+built+"\u201D.";
+
+  // values + patterns: blend two from primary with one from secondary, rotated by their words
+  var sV=hashStr((state.text.v_years||"")+admire+primary+secondary);
+  var values=rot(P.values,sV).slice(0,2).concat([rot(S.values,sV>>3)[0]]);
+  values=values.filter(function(v,i,a){return a.indexOf(v)===i;}).slice(0,3);
+  var sP=hashStr(rabbit+built+primary+secondary);
+  var patterns=rot(P.patterns,sP).slice(0,2).concat([rot(S.patterns,sP>>3)[0]]);
+  patterns=patterns.filter(function(v,i,a){return a.indexOf(v)===i;}).slice(0,3);
+
+  // whyAuthentic: genuine synthesis of the signals they actually gave, not an echo
+  var sigs=[];
+  if(frust) sigs.push("what frustrates you (\u201C"+frust+"\u201D)");
+  if(rabbit) sigs.push("what you read about unprompted (\u201C"+rabbit+"\u201D)");
+  if(built) sigs.push("what you built without being asked (\u201C"+built+"\u201D)");
+  if(longq) sigs.push("the question you keep returning to (\u201C"+longq+"\u201D)");
+  if(admire) sigs.push("who you admire (\u201C"+admire+"\u201D)");
+  var pick=sigs.slice(0,3);
+  var sY=hashStr(frust+built+admire+primary+secondary);
+  var bl=BLEND[secondary][sY%BLEND[secondary].length];
+  var np=ESSENCE_NP[primary];
+  var why;
+  if(pick.length>=2){
+    var joined=pick.slice(0,-1).join(", ")+", and "+pick[pick.length-1];
+    var templates=[
+      "Look at what you actually gave: "+joined+". Those are not separate interests, they are one. The thread beneath them is "+np+", and you go at it with "+bl+". That is a throughline rather than a line on a list, because it shows up in what you do when nobody is grading it.",
+      "The theme is not any single one of your answers but what they share. "+cap(joined)+" all circle the same thing: "+np+". The second colour in how you approach it is "+bl+". It reads as genuine because it was there before any application, in choices you make for their own sake.",
+      cap(joined)+" all point one way. Underneath the topics, what you are really chasing is "+np+", approached with "+bl+". A reader trusts a theme like this precisely because you did not assemble it to impress anyone; it is simply what you keep doing."
+    ];
+    why=templates[sY%templates.length];
+  }else if(pick.length===1){
+    why="Even from a little, the direction is clear. "+cap(pick[0])+" points straight at "+np+", and you approach it with "+bl+". It reads as genuine because it is what you do without being asked; typing a few more specifics into the boxes would sharpen it further.";
+  }else{
+    why="Your theme comes from the consistent direction of your selections across curiosities, frustrations, and values, which all circle "+np+", approached with "+bl+". Type a few specifics into the boxes above and this becomes far sharper and more personal.";
+  }
+  if(env&&wantsCtx) why+=" The place you come from (\u201C"+env+"\u201D) is part of why this question is yours and not borrowed.";
+
+  return {recurringQuestions:questions,worldview:worldview,values:values,intellectualPatterns:patterns,whyAuthentic:why};
+}
+/* ============================ STRUCTURED SECTIONS ============================ */
+function presentCats(){var set={};state.acts.forEach(function(a){if(a.name.trim()&&a.cat){set[a.cat]=(set[a.cat]||0)+1;}});return set;}
+function buildStructured(primary,secondary){
+  var P=LENSES[primary],S=LENSES[secondary];
+  var ranked=rankLenses(computeScores());
+  var es=state.chips.env_integrate||[]; var envOn=es.length&&(es[0]===0||es[0]===1);
+  var seed=hashStr((state.text.c_rabbit||"")+(state.text.b_started||"")+(state.field||"")+primary);
+  var used={};
+  function pool(l){
+    var ideas=(IDEAS[l]||[]).slice();
+    var k=ideas.length?(seed%ideas.length):0;
+    var rot=ideas.slice(k).concat(ideas.slice(0,k));
+    if(envOn&&ENV_IDEAS[l]){var ek=ENV_IDEAS[l].length?(seed%ENV_IDEAS[l].length):0;var erot=ENV_IDEAS[l].slice(ek).concat(ENV_IDEAS[l].slice(0,ek));return erot.concat(rot);}
+    return rot;
+  }
+  function take(l,n){var p=pool(l),out=[],i;for(i=0;i<p.length&&out.length<n;i++){if(!used[p[i]]){used[p[i]]=1;out.push(p[i]);}}for(i=0;i<p.length&&out.length<n;i++){if(out.indexOf(p[i])<0)out.push(p[i]);}return out;}
+  // signature creative ideas (the showcase)
+  var signature=take(primary,4).concat(take(secondary,2));
+  // opportunities
+  function oscore(o){var s=0;o.lenses.forEach(function(l){if(l===primary)s+=6;else if(l===secondary)s+=3;else if(l===ranked[2])s+=1.5;else s+=0.2;});s+=o.prestige*0.25;return s;}
+  var opps=OPPS.map(function(o){return {o:o,s:oscore(o)};}).filter(function(x){return x.o.lenses.indexOf(primary)>=0||x.o.lenses.indexOf(secondary)>=0;}).sort(function(a,b){return b.s-a.s;}).slice(0,10).map(function(x){
+    var fit=(x.o.lenses.indexOf(primary)>=0)?("Direct fit with your "+P.name.toLowerCase()+" focus."):("Reinforces your secondary "+S.name.toLowerCase()+" thread.");
+    return Object.assign({},x.o,{fit:fit});
+  });
+  // gap analysis with category-targeted creative recommendations
+  var cats=presentCats();
+  var target=["Research","Leadership","Personal project","Competition / Olympiad","Volunteering","Writing / Creative"];
+  var missing=target.filter(function(c){return !cats[c];});
+  var weak=Object.keys(cats).filter(function(c){return cats[c]===1;});
+  var over=Object.keys(cats).filter(function(c){return cats[c]>=4;});
+  var totalActs=Object.keys(cats).reduce(function(a,c){return a+cats[c];},0);
+  var compName=(opps[0]?opps[0].name:P.bp.competitions[0]);
+  var recommend=[];
+  missing.forEach(function(c){
+    if(c==="Research"||c==="Personal project"){recommend.push(take(primary,1)[0]);}
+    else if(c==="Competition / Olympiad"){recommend.push("Enter "+compName+", which fits your lens, and treat it as a deadline for real work.");}
+    else if(c==="Leadership"){recommend.push("Turn your strongest project into something you lead, with a small team and a trained successor.");}
+    else if(c==="Volunteering"){recommend.push(take(secondary,1)[0]);}
+    else if(c==="Writing / Creative"){recommend.push("Document your work publicly (a blog or thread dissecting what you build) so a reader can follow your thinking.");}
+  });
+  if(recommend.length<3){take(primary,3-recommend.length).forEach(function(x){recommend.push(x);});}
+  recommend=recommend.filter(Boolean).slice(0,4);
+  var strongest=(state.acts.filter(function(a){return a.name.trim();})[0]||{}).name||"";
+  function clip(s){s=String(s||"").replace(/\s+/g," ").trim();return s.length>80?s.slice(0,79)+"…":s;}
+  var gaps={
+    missing: missing.length?missing.map(function(c){return c+" — nothing here yet";}):["Your categories are well spread; deepen rather than add."],
+    weak: weak.length?weak.map(function(c){return c+" — only one entry; go deeper or show progression";}):["No single-entry areas; good depth so far."],
+    over: over.length?over.map(function(c){return c+" — several entries; make sure each ties to your theme or trim it";}):(totalActs>0?["No overloaded areas; nothing to trim."]:["Add your activities above to unlock this analysis."]),
+    coherence:[
+      strongest?("Rewrite \u201C"+clip(strongest)+"\u201D so its description names the question behind it, not just the task, framed through your "+P.name.toLowerCase()+" lens."):("Reframe your strongest activity through your "+P.name.toLowerCase()+" lens, so its description names the question, not just the task."),
+      "Make your single strongest project the visible center, and let the others read as support for it."
+    ],
+    recommend: recommend
+  };
+  // roadmap (grade aware, references the creative ideas)
+  var g=state.grade;
+  var stage=(g.indexOf("9")>=0)?0:(g.indexOf("10")>=0)?1:(g.indexOf("11")>=0)?2:(g.indexOf("12")>=0)?3:0;
+  var stages=[
+    {sg:"Curiosity",h:"Sample widely",p:"Read, watch, and try things in and around "+P.name.toLowerCase()+". Keep a list of the questions that recur."},
+    {sg:"Exploration",h:"Commit and build",p:"Start one real project from your signature ideas below and ship a rough first version."},
+    {sg:"Expertise",h:"Go deep",p:"Push that project to a real result, and enter "+P.bp.competitions[0].toLowerCase()+"."},
+    {sg:"Leadership",h:"Lead and scale",p:P.bp.leadership[0]+". Make your spike unmistakable."},
+    {sg:"Impact",h:"Show it matters",p:"Hand it off or scale it, then write your essays around the throughline."}
+  ];
+  stages.forEach(function(s,i){s.grade=["9th","10th","11th","12th","12th+"][i];s.now=(i===stage);});
+  var near=["next 3–6 months","next 3–6 months","this season","this term"][Math.min(stage,3)];
+  function dot(x){return /[.!?]$/.test(x)?x:x+".";}
+  var roadmap={stages:stages,
+    short:["Pick the one question from this assessment that feels most like you, and write it where you will see it.","Start the highest-impact idea from your signature list: "+(signature[0]||P.bp.activities[0]),"Apply to or prepare for "+(opps[0]?opps[0].name:P.bp.summer[0])+"."],
+    medium:[dot(signature[1]||P.bp.research[0]),"Take on "+P.bp.leadership[0].toLowerCase()+".","Add the missing piece from your gap analysis: "+(missing[0]||"deepen your strongest project")+"."],
+    long:[dot(signature[2]||P.bp.community[0]),"Compete in or complete "+(opps[1]?opps[1].name:P.bp.competitions[0])+".","Write your main essay around the throughline, using "+P.bp.essays[0].toLowerCase()+"."],
+    nearLabel:near};
+  // blueprint (creative where it used to be generic)
+  var field=(state.field&&state.field.trim())?state.field.trim():null;
+  var blueprint={
+    Activities:take(primary,2),
+    Research:take(primary,1),
+    Leadership:P.bp.leadership,
+    Competitions:P.bp.competitions,
+    Essays:P.bp.essays,
+    "Summer programs":P.bp.summer,
+    "Community initiatives":take(secondary,1).concat([P.bp.community[0]]),
+    "Future academic goals": field?["Study "+field+" through the lens of "+P.name.toLowerCase()+"."].concat(P.bp.future):P.bp.future
+  };
+  return {opps:opps,gaps:gaps,roadmap:roadmap,blueprint:blueprint,signature:signature,envOn:envOn};
+}
+function buildHeuristicCore(){
+  var sc=computeScores();var ranked=rankLenses(sc);
+  var primary=ranked[0],secondary=ranked[1],tertiary=ranked[2];
+  var scores=scaleScores(sc,ranked);
+  var conf=confidenceFrom(sc,ranked);
+  var analysis=buildAnalysis(primary,secondary);
+  var alternatives=[secondary,tertiary].map(function(l){return {statement:themeFor(l,state.field),why:"Your answers also lean toward "+LENSES[l].name.toLowerCase()+". This is a strong secondary thread you can fold into the primary theme rather than choose between."};});
+  return {primary:primary,secondary:secondary,tertiary:tertiary,scores:scores,confidence:conf,themeStatement:composeTheme(primary,secondary,state.field),alternatives:alternatives,analysis:analysis,aiUsed:false};
+}
+/* ============================ AI ============================ */
+function buildPrompt(){
+  function chipLabels(qid){var arr=state.chips[qid]||[];var all=[];STEPS.forEach(function(s){s.qs.forEach(function(x){all.push(x);});});var q=all.filter(function(x){return x.id===qid;})[0];return arr.map(function(i){return q.chips[i].t;});}
+  var A={
+    grade:state.grade||"unspecified", intendedField:state.field||"unspecified",
+    problemsThatPullMe:chipLabels("c_pull"),
+    rabbitHoles:state.text.c_rabbit||"", longstandingQuestion:state.text.c_question||"",
+    iConsume:chipLabels("c_media"),
+    frustration:state.text.f_world||"", betterWay:chipLabels("f_betterway"), iCouldFix:state.text.f_fix||"",
+    startedOnMyOwn:state.text.b_started||"", loseTrackOfTime:chipLabels("b_losetime"), freeAfternoon:state.text.b_freetime||"",
+    impactThatMatters:chipLabels("v_impact"), iAdmire:state.text.v_admire||"", worthYearsOfMyLife:state.text.v_years||"",
+    background:state.text.bg||"", environmentAndCircumstances:state.text.env||"", weaveContext:(chipLabels("ctx_include")[0]||"unspecified"),
+    connectToEnvironment:(chipLabels("env_integrate")[0]||"unspecified"),
+    activities:state.acts.filter(function(a){return a.name.trim();}).map(function(a){return {what:a.name,category:a.cat||"unspecified"};})
+  };
+  var ids=LENS_ORDER.join(", ");
+  var system="You are an elite college admissions strategist and developmental psychologist. You find the single recurring thread (the throughline) beneath a student's interests, frustrations, behaviors, and values, and turn it into an authentic application theme. You never recommend what merely sounds impressive; you surface the deepest genuine pattern. "+
+  "Return ONLY a single minified JSON object, no markdown, no commentary. Schema: "+
+  '{"themeStatement":"one vivid sentence like A research-driven systems thinker using computation and policy to improve how critical resources are distributed",'+
+  '"lensScores":{ '+ids+' : integer 0-100 for how strongly each lens fits this student },'+
+  '"alternatives":[{"statement":"one sentence","why":"one personal sentence"},{"statement":"...","why":"..."}],'+
+  '"analysis":{"recurringQuestions":["3 short questions in the student spirit"],"worldview":"2 sentences specific to them","values":["3 short phrases"],"intellectualPatterns":["3 short phrases"],"whyAuthentic":"2 sentences quoting or paraphrasing their own answers to show this is genuine"},'+
+  '"ideas":["5 to 6 original, specific, high-impact project ideas that YOU invent for THIS student, each a concrete one or two sentence project a reader has not seen a hundred times, tied to their field, interests, and environment"]}'+
+  " Anchor the theme to the student's intended major when one is given: the SAME lens reads very differently across majors, so a pull toward uncertainty can look like economics, statistics, or engineering. Phrase the theme in their stated field rather than drifting to a different one. If weaveContext is yes or maybe, let their background and environment inform why the theme matters and where it came from, but keep the theme about the student and never reduce them to hardship; if it is no, do not foreground their background."+
+  " Any examples or recommendations you give must be specific, unusual, and high-impact, never generic; prefer a niche project a reader has not seen a hundred times over a safe one. If connectToEnvironment is yes or maybe, give the theme and any project ideas an environmental or sustainability dimension woven into the student's field, not bolted on."+
+  " Reason for yourself before answering: infer the student's real throughline from the specifics they gave rather than from surface keywords, and invent the ideas from that reasoning, not from a list of common activities. Use the student's actual words. Be specific and personal, never generic. Keep strings concise; ideas may be one or two sentences each. lensScores must use exactly these keys: "+ids+".";
+  return {system:system, user:"Student responses (JSON):\n"+JSON.stringify(A)};
+}
+function extractJSON(txt){
+  if(!txt)return null;var t=txt.trim();t=t.replace(/^```(json)?/i,"").replace(/```$/,"").trim();
+  var a=t.indexOf("{"),b=t.lastIndexOf("}");if(a>=0&&b>a)t=t.slice(a,b+1);
+  try{return JSON.parse(t);}catch(e){return null;}
+}
+function parseAIResponse(data){
+  var txt="";
+  if(data){
+    if(typeof data.content==="string")txt=data.content;
+    else if(Array.isArray(data.content))txt=data.content.map(function(b){return b&&b.type==="text"?b.text:"";}).join("\n");
+    else if(typeof data.text==="string")txt=data.text;
+    else if(data.choices&&data.choices[0]&&data.choices[0].message)txt=data.choices[0].message.content||"";
+  }
+  var j=extractJSON(txt);
+  if(!j||!j.themeStatement||!j.lensScores)return null;
+  return j;
+}
+function callBackend(){
+  var p=buildPrompt();
+  var ctrl=new AbortController();var to=setTimeout(function(){ctrl.abort();},38000);
+  return fetch("/api/analyze",{method:"POST",headers:{"Content-Type":"application/json"},signal:ctrl.signal,
+    body:JSON.stringify({system:p.system,user:p.user})})
+    .then(function(res){clearTimeout(to);if(!res.ok)throw new Error("status "+res.status);return res.json();})
+    .then(function(data){return parseAIResponse(data);})
+    .catch(function(){clearTimeout(to);return null;});
+}
+function callAnthropicDirect(){
+  var p=buildPrompt();
+  var ctrl=new AbortController();var to=setTimeout(function(){ctrl.abort();},32000);
+  return fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},signal:ctrl.signal,
+    body:JSON.stringify({model:"claude-sonnet-4-6",max_tokens:1600,system:p.system,messages:[{role:"user",content:p.user}]})})
+    .then(function(res){clearTimeout(to);if(!res.ok)throw new Error("status "+res.status);return res.json();})
+    .then(function(data){return parseAIResponse(data);})
+    .catch(function(){clearTimeout(to);return null;});
+}
+function callAI(){
+  return callBackend().then(function(j){return j?j:callAnthropicDirect();});
+}
+function mergeAI(j){
+  var sc={};LENS_ORDER.forEach(function(l){sc[l]=(typeof j.lensScores[l]==="number")?Math.max(0,Math.min(100,j.lensScores[l])):0;});
+  var ranked=LENS_ORDER.slice().sort(function(a,b){return sc[b]-sc[a];});
+  var primary=ranked[0],secondary=ranked[1],tertiary=ranked[2];
+  var top=sc[primary],sec=sc[secondary]||0;var conf=Math.max(58,Math.min(95,Math.round(62+(top-sec)*0.4+(top>=80?6:0))));
+  var alts=Array.isArray(j.alternatives)?j.alternatives.slice(0,2).map(function(a){return {statement:String(a.statement||""),why:String(a.why||"")};}):[];
+  if(alts.length<2){var extra=[secondary,tertiary].map(function(l){return {statement:themeFor(l,state.field),why:"A strong secondary thread in your answers."};});alts=alts.concat(extra).slice(0,2);}
+  var an=j.analysis||{};
+  var base=buildAnalysis(primary,secondary);
+  var analysis={
+    recurringQuestions:(Array.isArray(an.recurringQuestions)&&an.recurringQuestions.length)?an.recurringQuestions.slice(0,4):base.recurringQuestions,
+    worldview:an.worldview||base.worldview,
+    values:(Array.isArray(an.values)&&an.values.length)?an.values.slice(0,4):base.values,
+    intellectualPatterns:(Array.isArray(an.intellectualPatterns)&&an.intellectualPatterns.length)?an.intellectualPatterns.slice(0,4):base.intellectualPatterns,
+    whyAuthentic:an.whyAuthentic||base.whyAuthentic
+  };
+  var aiIdeas=Array.isArray(j.ideas)?j.ideas.filter(function(x){return typeof x==="string"&&x.trim().length>12;}).map(function(x){return String(x).trim();}):[];
+  return {primary:primary,secondary:secondary,tertiary:tertiary,scores:sc,confidence:conf,themeStatement:String(j.themeStatement),alternatives:alts,analysis:analysis,aiIdeas:aiIdeas,aiUsed:true};
+}
+/* ============================ RUN + RENDER ============================ */
+function runAnalysis(){
+  show("#screen-analyzing");$("#tb-status").textContent="Analyzing";
+  var steps=[].slice.call(document.querySelectorAll(".astep"));steps.forEach(function(s){s.className="astep";});
+  var si=0;var tick=function(){if(si>0)steps[si-1].className="astep ok";if(si<steps.length){steps[si].className="astep on";si++;}};
+  tick();var iv=setInterval(tick,900);
+  var minWait=new Promise(function(r){setTimeout(r,2600);});
+  Promise.all([callAI(),minWait]).then(function(arr){
+    var j=arr[0];clearInterval(iv);steps.forEach(function(s){s.className="astep ok";});
+    var core;
+    if(j){core=mergeAI(j);$("#analyzing-mode").textContent="Personalized by AI";}
+    else{core=buildHeuristicCore();$("#analyzing-mode").textContent="Built-in analysis engine";}
+    var struct=buildStructured(core.primary,core.secondary);
+    if(core.aiIdeas&&core.aiIdeas.length>=3){struct.signature=core.aiIdeas.slice(0,6);struct.blueprint.Activities=core.aiIdeas.slice(0,2);}
+    state.result=Object.assign({},core,struct,{grade:state.grade,field:state.field});
+    setTimeout(function(){renderResults();show("#screen-results");$("#tb-status").textContent="Your results";},450);
+  });
+}
+function radarSVG(scores,ranked){
+  var ids=ranked.slice(0,Math.min(7,ranked.length));var n=ids.length;var cx=150,cy=150,R=104;
+  function pt(i,r){var a=-Math.PI/2+i*(2*Math.PI/n);return [cx+r*Math.cos(a),cy+r*Math.sin(a)];}
+  var grid="";[0.25,0.5,0.75,1].forEach(function(f){var p=ids.map(function(_,i){return pt(i,R*f).join(",");}).join(" ");grid+='<polygon points="'+p+'" fill="none" stroke="#E5E9F0" stroke-width="1"/>';});
+  var axes="";ids.forEach(function(_,i){var e=pt(i,R);axes+='<line x1="'+cx+'" y1="'+cy+'" x2="'+e[0]+'" y2="'+e[1]+'" stroke="#EFF2F7"/>';});
+  var poly=ids.map(function(l,i){return pt(i,R*(Math.max(8,scores[l])/100)).join(",");}).join(" ");
+  var dots=ids.map(function(l,i){var p=pt(i,R*(Math.max(8,scores[l])/100));return '<circle cx="'+p[0]+'" cy="'+p[1]+'" r="3.5" fill="'+(i===0?"#B0851F":"#2B49B8")+'"/>';}).join("");
+  var labels=ids.map(function(l,i){var p=pt(i,R+20);var anchor=Math.abs(p[0]-cx)<10?"middle":(p[0]>cx?"start":"end");return '<text x="'+p[0]+'" y="'+(p[1]+3)+'" font-size="9.5" fill="#647189" text-anchor="'+anchor+'">'+esc(LENSES[l].name.split(" ")[0])+'</text>';}).join("");
+  return '<svg class="radar" width="300" height="300" viewBox="0 0 300 300">'+grid+axes+'<polygon points="'+poly+'" fill="rgba(176,133,31,0.16)" stroke="#B0851F" stroke-width="2"/>'+dots+labels+'</svg>';
+}
+function stars(n){var s="";for(var i=0;i<5;i++)s+=(i<n?"●":"○");return s;}
+function diffClass(d){d=(d||"").toLowerCase();if(d.indexOf("extreme")>=0||d.indexOf("high")>=0)return "w";if(d.indexOf("low")>=0||d.indexOf("moderate")>=0)return "g";return "";}
+function ul(arr){return '<ul class="clean">'+arr.map(function(x){return '<li>'+esc(x)+'</li>';}).join("")+'</ul>';}
+function contextSectionHTML(r){
+  var sel=state.chips.ctx_include||[];var choice=sel.length?sel[0]:-1; // 0 yes, 1 maybe, 2 no
+  var bg=(state.text.bg||"").trim(), env=(state.text.env||"").trim();
+  if(choice===2){
+    return '<div class="section"><h2><span class="sn" style="background:#16263F">✦</span>Your background and story</h2>'+
+      '<div class="card"><p style="margin:0;font-size:15px">You chose to keep your background separate from your theme, which is a perfectly valid decision. If you ever change your mind, the <b>Additional Information</b> section of an application exists precisely to give a reader the context for your circumstances, and a single well-placed detail about your environment can change how every activity in your file is read.</p></div></div>';
+  }
+  if(choice!==0 && choice!==1 && !bg && !env) return "";
+  var P=LENSES[r.primary];
+  function snip(s){s=s.replace(/\s+/g," ").trim();return s.length>140?s.slice(0,138)+"…":s;}
+  var connect=(bg||env)
+    ? "Your background"+(bg?" (\u201C"+esc(snip(bg))+"\u201D)":"")+" and the environment you describe"+(env?" (\u201C"+esc(snip(env))+"\u201D)":"")+" are not separate from your theme. Used well, they explain where your "+esc(P.name.toLowerCase())+" lens came from and why this question genuinely matters to you."
+    : "You signalled that you would like your background and environment to be part of your story. Even a few concrete details about where you come from can show a reader why your "+esc(P.name.toLowerCase())+" theme is authentic rather than chosen.";
+  var uses=[
+    "In your personal statement: let your environment be the origin of your theme, not a separate hardship story. The strongest version shows the moment your context first raised the question you keep asking.",
+    "In the Additional Information section: briefly explain the resources and constraints that shaped what was available to you, so a reader interprets your activities in the right context.",
+    "In a community, identity, or 'why us' supplement: connect your cultural ties to your lens, and to what you would bring to a campus."
+  ];
+  return '<div class="section"><h2><span class="sn" style="background:#16263F">✦</span>Your background and story</h2>'+
+    '<p class="sintro">How the context you come from can strengthen your theme, if you choose to include it.</p>'+
+    '<div class="card"><div class="subcard"><h4>Why your context belongs in your theme</h4><p>'+connect+'</p></div>'+
+    '<div class="subcard"><h4>Where to use it</h4>'+ul(uses)+'</div>'+
+    '<div class="subcard" style="background:#F8EFDD;border-color:#f0e2c8"><h4 style="color:#9A6212">One caution</h4><p>Keep your background as context that illuminates your theme, not as a separate plea. Specificity beats hardship: the particular detail of your environment is more convincing than a general story of struggle, which a reader has seen many times.</p></div></div></div>';
+}
+function renderResults(){
+  var r=state.result;var P=LENSES[r.primary];var ranked=LENS_ORDER.slice().sort(function(a,b){return r.scores[b]-r.scores[a];});
+  var badge=r.aiUsed?'<span class="badge badge-ai">✦ Personalized by AI</span>':'<span class="badge badge-engine">◷ Built-in analysis engine</span>';
+  var bpIcons={Activities:"▦",Research:"⚗",Leadership:"★",Competitions:"♛",Essays:"✎","Summer programs":"☀","Community initiatives":"⌂","Future academic goals":"➜"};
+  var h="";
+  h+='<div class="res-hero">'+badge+'<div class="klabel">Your application throughline</div>'+
+     '<h1 class="serif">'+esc(r.themeStatement)+'</h1>'+
+     '<div class="conf"><span class="ct">Confidence</span><div class="meter"><div style="width:'+r.confidence+'%"></div></div><span class="num">'+r.confidence+'%</span></div></div>';
+  h+='<div class="section"><h2><span class="sn">1</span>Theme confidence &amp; alternatives</h2>'+
+     '<p class="sintro">Your responses scored most strongly for <b>'+esc(P.name)+'</b>. The radar shows your top lenses; the bars rank them. Two strong alternative framings appear below, which you can fold into your primary theme rather than choose between.</p>'+
+     '<div class="card"><div class="radarwrap">'+radarSVG(r.scores,ranked)+
+     '<div class="lensbars">'+ranked.slice(0,6).map(function(l,i){return '<div class="lensbar'+(i===0?" primary":"")+'"><div class="t"><b>'+esc(LENSES[l].name)+'</b><span>'+r.scores[l]+'</span></div><div class="track"><div style="width:'+Math.max(6,r.scores[l])+'%"></div></div></div>';}).join("")+'</div></div>'+
+     '<div class="altgrid">'+r.alternatives.map(function(a){return '<div class="altcard"><div class="at serif">'+esc(a.statement)+'</div><div class="aw">'+esc(a.why)+'</div></div>';}).join("")+'</div></div></div>';
+  var an=r.analysis;
+  h+='<div class="section"><h2><span class="sn">2</span>Deep theme analysis</h2>'+
+     '<div class="grid2">'+
+       '<div class="card"><div class="subcard"><h4>The questions driving you</h4>'+ul(an.recurringQuestions)+'</div>'+
+         '<div class="subcard"><h4>Your worldview</h4><p>'+esc(an.worldview)+'</p></div>'+
+         '<div class="subcard"><h4>Why this theme is authentic</h4><p>'+esc(an.whyAuthentic)+'</p></div></div>'+
+       '<div class="card"><div class="subcard"><h4>Values underneath your choices</h4>'+ul(an.values)+'</div>'+
+         '<div class="subcard"><h4>Intellectual patterns</h4>'+ul(an.intellectualPatterns)+'</div></div>'+
+     '</div></div>';
+  h+=contextSectionHTML(r);
+  h+='<div class="section"><h2><span class="sn">3</span>Application blueprint</h2>'+
+     '<p class="sintro">How one theme can show up across every part of your application, so each component reinforces the same person.</p>'+
+     '<div class="bpgrid">'+Object.keys(r.blueprint).map(function(k){return '<div class="bpcard"><div class="bh"><span class="bi">'+(bpIcons[k]||"•")+'</span><h4>'+esc(k)+'</h4></div>'+ul(r.blueprint[k])+'</div>';}).join("")+'</div></div>';
+  h+='<div class="section"><h2><span class="sn" style="background:#8A6916">✦</span>Signature project ideas</h2>'+
+     '<p class="sintro">Specific, unusual, high-impact starting points for your theme'+(r.envOn?', each given an environmental or sustainability angle since you asked':'')+'. These are meant to be distinctive, not safe. Pick one or two that genuinely excite you and make them your own.</p>'+
+     '<div class="bpgrid">'+(r.signature||[]).map(function(idea,i){return '<div class="bpcard" style="border-left:4px solid #B0851F"><div class="bh"><span class="bi" style="background:#F3EAD0;color:#8A6916;font-weight:700">'+(i+1)+'</span><h4 style="font-size:13px;letter-spacing:.4px;text-transform:uppercase;color:#647189">Idea '+(i+1)+'</h4></div><p style="margin:0;font-size:14.5px">'+esc(idea)+'</p></div>';}).join("")+'</div></div>';
+  h+='<div class="section"><h2><span class="sn">4</span>Recommended opportunities</h2>'+
+     '<p class="sintro">Matched to your theme from a curated database, ranked by fit. Each shows prestige, difficulty, grade level, and commitment. Always verify current details and eligibility.</p>'+
+     '<div class="oppctrl"><span class="muted" style="font-size:13.5px">Showing the best-fit programs for your lens</span>'+
+       '<label class="toggle"><input type="checkbox" id="intl-only" onchange="renderOpps()"><span class="tk"></span>Open to international students only</label></div>'+
+     '<div class="oppgrid" id="oppgrid"></div></div>';
+  var g=r.gaps;
+  h+='<div class="section"><h2><span class="sn">5</span>Activity gap analysis</h2>'+
+     '<p class="sintro">Where your current profile is thin, crowded, or not yet pointing at your theme.</p>'+
+     '<div class="gapgrid">'+
+       '<div class="gapcard gap-missing"><h4>Missing</h4>'+ul(g.missing)+'</div>'+
+       '<div class="gapcard gap-weak"><h4>Thin</h4>'+ul(g.weak)+'</div>'+
+       '<div class="gapcard gap-over"><h4>Crowded</h4>'+ul(g.over)+'</div>'+
+       '<div class="gapcard gap-coh"><h4>Coherence opportunities</h4>'+ul(g.coherence)+'</div></div>'+
+     '<div class="card gaprec"><div class="subcard"><h4>What to add next</h4>'+ul(g.recommend)+'</div></div></div>';
+  var rm=r.roadmap;
+  h+='<div class="section"><h2><span class="sn">6</span>Four-year roadmap</h2>'+
+     '<p class="sintro">From curiosity to impact. Your current stage is highlighted; the timeline is tuned to your grade ('+esc(r.grade||"unspecified")+').</p>'+
+     '<div class="stages">'+rm.stages.map(function(s){return '<div class="stage" style="'+(s.now?'border-color:#B0851F;box-shadow:0 0 0 2px rgba(176,133,31,.18)':'')+'"><span class="gr">'+esc(s.grade)+'</span><div class="sg">'+esc(s.sg)+(s.now?' · you are here':'')+'</div><h4>'+esc(s.h)+'</h4><p>'+esc(s.p)+'</p></div>';}).join("")+'</div>'+
+     '<div class="tl">'+
+       '<div class="tlcol card"><div class="when">Short term · '+esc(rm.nearLabel)+'</div><h4>Start now</h4>'+ul(rm.short)+'</div>'+
+       '<div class="tlcol card"><div class="when">Medium term · this year</div><h4>Build depth</h4>'+ul(rm.medium)+'</div>'+
+       '<div class="tlcol card"><div class="when">Long term · by senior year</div><h4>Show impact</h4>'+ul(rm.long)+'</div></div></div>';
+  h+='<div class="res-actions"><button class="btn btn-gold btn-lg" onclick="window.print()">⤓ Export as PDF</button>'+
+     '<button class="btn btn-ghost btn-lg" onclick="retake()">↺ Retake assessment</button></div>'+
+     '<p class="disc">Throughline is a discovery and planning tool, not an admissions guarantee. A theme matters most at the most selective schools and never replaces genuine work or strong academics. Treat every recommendation as a starting point and confirm program details and eligibility yourself.</p>';
+  $("#results-root").innerHTML=h;
+  renderOpps();
+}
+function renderOpps(){
+  var r=state.result;var intlEl=$("#intl-only");var intl=intlEl&&intlEl.checked;
+  var list=r.opps;if(intl)list=list.filter(function(o){return o.region.toLowerCase().indexOf("global")>=0;});
+  if(!list.length)list=[{name:"Found your own initiative",cat:"Community",prestige:2,difficulty:"Varies",grades:"9–12",commitment:"Ongoing",region:"Global",fit:"When formal programs are limited, a self-started project on your theme is the most powerful and accessible move.",blurb:""}];
+  $("#oppgrid").innerHTML=list.map(function(o){
+    return '<div class="opp"><div class="otop"><div><div class="ocat">'+esc(o.cat)+'</div><div class="oname">'+esc(o.name)+'</div></div><div class="stars" title="Prestige">'+stars(o.prestige)+'</div></div>'+
+      '<div class="ofit">'+esc(o.fit)+' '+esc(o.blurb||"")+'</div>'+
+      '<div class="ometa">'+
+        '<span class="tag '+diffClass(o.difficulty)+'">'+esc(o.difficulty)+'</span>'+
+        '<span class="tag b">Grades '+esc(o.grades)+'</span>'+
+        '<span class="tag">'+esc(o.commitment)+'</span>'+
+        '<span class="tag '+(o.region.toLowerCase().indexOf("global")>=0?"g":"")+'">'+esc(o.region)+'</span>'+
+      '</div></div>';
+  }).join("");
+}
+function retake(){
+  state.step=0;state.chips={};state.text={};state.grade="";state.field="";
+  state.acts=[{name:"",cat:""},{name:"",cat:""},{name:"",cat:""}];state.result=null;
+  renderStep();show("#screen-assessment");$("#tb-status").textContent="Assessment in progress";
+}
+</script>
+</body>
+</html>
